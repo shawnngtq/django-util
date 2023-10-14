@@ -1,4 +1,4 @@
-# Django Util
+# Index
 
 For source code, visit [django-util](https://github.com/shawnngtq/django-util/).
 
