@@ -49,20 +49,20 @@ class Base(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
     )
-    created_by = models.ForeignKey(
-        Profile,
-        editable=False,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="%(class)s_created_by",
-    )
-    updated_by = models.ForeignKey(
-        Profile,
-        editable=False,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="%(class)s_updated_by",
-    )
+    # created_by = models.ForeignKey(
+    #     Profile,
+    #     editable=False,
+    #     null=True,
+    #     on_delete=models.SET_NULL,
+    #     related_name="%(class)s_created_by",
+    # )
+    # updated_by = models.ForeignKey(
+    #     Profile,
+    #     editable=False,
+    #     null=True,
+    #     on_delete=models.SET_NULL,
+    #     related_name="%(class)s_updated_by",
+    # )
     # data_source = UpperTextField(
     #     blank=True,
     #     default="",
@@ -102,8 +102,8 @@ class Base(models.Model):
     def get_extra_meta_field_list() -> list:
         return sorted(
             [
-                "created_by",
-                "updated_by",
+                # "created_by",
+                # "updated_by",
                 # "data_source",
                 "note",
                 # "version_number",

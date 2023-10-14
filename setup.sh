@@ -33,8 +33,8 @@ mkdocs_github_deploy() {
 build_pypi() {
     rm -rf build
     rm -rf dist
-    rm -rf data_manipulation.egg-info
-    rm -rf data_manipulation-*
+    rm -rf django_util.egg-info
+    rm -rf django-util-*
     # Build distribution
     python setup.py sdist bdist_wheel
 }
