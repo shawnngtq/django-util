@@ -52,3 +52,5 @@ class NoParamURLField(models.URLField):
 
 # for admin.py
 list_display_exclude = tuple(list(related_fields) + list(complex_fields))
+list_filter_base = ["is_admin_verified"]
+list_filter_base_public_contribute = list_filter_base + ["is_verified"]

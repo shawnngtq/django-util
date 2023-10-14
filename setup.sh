@@ -21,8 +21,29 @@ mkdocs_setup() {
     mkdocs new .
 }
 
+mkdocs_rebuild() {
+    rm -rf site
+    mkdocs build
+}
+
 mkdocs_github_deploy() {
     mkdocs gh-deploy
+}
+
+build_pypi() {
+    rm -rf build
+    rm -rf dist
+    rm -rf data_manipulation.egg-info
+    rm -rf data_manipulation-*
+    # Build distribution
+    python setup.py sdist bdist_wheel
+}
+
+upload_pypi() {
+    # Upload to Test PyPi
+    # python3 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+    # Upload to PyPi
+    twine upload dist/*
 }
 
 "$@"

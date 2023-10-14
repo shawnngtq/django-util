@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .fields import UpperTextField, complex_fields, related_fields
 
 
-# models
+# abstract
 class Profile(models.Model):
     """
     Profile model extend Django User model
@@ -21,14 +21,9 @@ class Profile(models.Model):
     )
 
     class Meta:
-        db_table = "profile"
-        ordering = ["-pk"]
-
-    def __str__(self) -> str:
-        return str(self.pk)
+        abstract = True
 
 
-# abstract
 class Base(models.Model):
     """
     The ideal abstract base model
@@ -93,7 +88,6 @@ class Base(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ["-pk"]
 
     @staticmethod
     def get_base_meta_field_list() -> list:
@@ -166,4 +160,3 @@ class BasePublicContribute(Base):
 
     class Meta:
         abstract = True
-        ordering = ["-pk"]
