@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 import versioneer
 
-with open("README.rst", "r") as f:
+with open("README.md", "r") as f:
     LONG_DESCRIPTION = f.read()
 with open("requirements.txt", "r") as f:
     REQUIREMENTS = [line.strip() for line in f]
