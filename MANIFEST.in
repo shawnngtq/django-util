@@ -5,3 +5,4 @@ include versioneer.py
 include django_util/_version.py
 recursive-include django_util/static *
 recursive-include django_util/templates *
+recursive-include django_util/templatetags *
