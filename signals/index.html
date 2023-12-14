@@ -14,7 +14,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.1">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.046329b4.min.css">
       
       
 
@@ -262,26 +262,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#django_util.signals.create_user_profile" class="md-nav__link">
-    create_user_profile()
-  </a>
-  
-    <nav class="md-nav" aria-label="create_user_profile()">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#django_util.signals.create_user_profile--reference" class="md-nav__link">
-    Reference
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -323,26 +303,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#django_util.signals.create_user_profile" class="md-nav__link">
-    create_user_profile()
-  </a>
-  
-    <nav class="md-nav" aria-label="create_user_profile()">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#django_util.signals.create_user_profile--reference" class="md-nav__link">
-    Reference
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -379,56 +339,6 @@
 
 
 
-
-
-<div class="doc doc-object doc-function">
-
-
-
-
-<h2 id="django_util.signals.create_user_profile" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">create_user_profile</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="n">profile_object</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>This receiver signal creates Profile object when User object is saved</p>
-<h4 id="django_util.signals.create_user_profile--reference">Reference</h4>
-<ul>
-<li>https://docs.djangoproject.com/en/dev/topics/signals/#receiver-functions</li>
-<li>https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html</li>
-</ul>
-
-          <details class="quote">
-            <summary>Source code in <code>django_util/signals.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_user_profile</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="n">profile_object</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This receiver signal creates Profile object when User object is saved</span>
-
-<span class="sd">    Reference</span>
-<span class="sd">    ---------</span>
-<span class="sd">    - https://docs.djangoproject.com/en/dev/topics/signals/#receiver-functions</span>
-<span class="sd">    - https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
-        <span class="n">profile_object</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-          </details>
-  </div>
-
-</div>
 
 
 
@@ -474,11 +384,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
-    
-      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      <script src="../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>
