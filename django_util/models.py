@@ -49,41 +49,37 @@ class Base(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
     )
-    # created_by = models.ForeignKey(
-    #     Profile,
-    #     editable=False,
-    #     null=True,
-    #     on_delete=models.SET_NULL,
-    #     related_name="%(class)s_created_by",
-    # )
-    # updated_by = models.ForeignKey(
-    #     Profile,
-    #     editable=False,
-    #     null=True,
-    #     on_delete=models.SET_NULL,
-    #     related_name="%(class)s_updated_by",
-    # )
+    created_by = models.ForeignKey(
+        Profile,
+        editable=False,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="%(class)s_created_by",
+    )
+    updated_by = models.ForeignKey(
+        Profile,
+        editable=False,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="%(class)s_updated_by",
+    )
     # data_source = UpperTextField(
     #     blank=True,
     #     default="",
-    #     help_text=_("This record's data source"),
     # )
     note = UpperTextField(
         blank=True,
         default="",
-        help_text=_("Internal note"),
     )
     # if default=1, model formset will become required as it is no longer empty, exclude version_number in formset
     # version_number = models.PositiveBigIntegerField(
     #     blank=True,
     #     default=1,
-    #     help_text=_("If data source / model changes, update this"),
     #     null=True,
     # )
     is_admin_verified = models.BooleanField(
         default=False,
         editable=False,
-        help_text=_("Is admin verified?"),
     )
 
     class Meta:
@@ -102,8 +98,8 @@ class Base(models.Model):
     def get_extra_meta_field_list() -> list:
         return sorted(
             [
-                # "created_by",
-                # "updated_by",
+                "created_by",
+                "updated_by",
                 # "data_source",
                 "note",
                 # "version_number",
@@ -155,7 +151,34 @@ class BasePublicContribute(Base):
 
     is_verified = models.BooleanField(
         default=False,
-        help_text=_("Is verified?"),
+    )
+    is_hidden = models.BooleanField(
+        default=False,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class EmailHttpRequest(Base):
+    email = models.EmailField(
+        db_index=True,
+    )
+    http_referer = UpperTextField(
+        blank=True,
+        default="",
+    )
+    http_user_agent = UpperTextField(
+        blank=True,
+        default="",
+    )
+    remote_addr = models.GenericIPAddressField(
+        blank=True,
+        null=True,
+    )
+    remote_host = UpperTextField(
+        blank=True,
+        default="",
     )
 
     class Meta:
