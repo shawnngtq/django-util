@@ -601,7 +601,9 @@
 <span class="normal">141</span>
 <span class="normal">142</span>
 <span class="normal">143</span>
-<span class="normal">144</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The ideal abstract base model</span>
 
@@ -626,20 +628,22 @@
     <span class="n">updated_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span>
         <span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">created_by</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
-        <span class="n">Profile</span><span class="p">,</span>
-        <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span>
-        <span class="c1"># related_name=&quot;%(class)s_created_by&quot;,</span>
-    <span class="p">)</span>
-    <span class="n">updated_by</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
-        <span class="n">Profile</span><span class="p">,</span>
-        <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span>
-        <span class="c1"># related_name=&quot;%(class)s_updated_by&quot;,</span>
-    <span class="p">)</span>
+    <span class="c1"># The field ConcreteModel.created_by was declared with a lazy reference to &#39;django_util.profile&#39;, but app &#39;django_util&#39; doesn&#39;t provide model &#39;profile&#39;.</span>
+    <span class="c1"># The field ConcreteModel.updated_by was declared with a lazy reference to &#39;django_util.profile&#39;, but app &#39;django_util&#39; doesn&#39;t provide model &#39;profile&#39;.</span>
+    <span class="c1"># created_by = models.ForeignKey(</span>
+    <span class="c1">#     Profile,</span>
+    <span class="c1">#     editable=False,</span>
+    <span class="c1">#     null=True,</span>
+    <span class="c1">#     on_delete=models.SET_NULL,</span>
+    <span class="c1">#     related_name=&quot;%(class)s_created_by&quot;,</span>
+    <span class="c1"># )</span>
+    <span class="c1"># updated_by = models.ForeignKey(</span>
+    <span class="c1">#     Profile,</span>
+    <span class="c1">#     editable=False,</span>
+    <span class="c1">#     null=True,</span>
+    <span class="c1">#     on_delete=models.SET_NULL,</span>
+    <span class="c1">#     related_name=&quot;%(class)s_updated_by&quot;,</span>
+    <span class="c1"># )</span>
     <span class="c1"># data_source = UpperTextField(</span>
     <span class="c1">#     blank=True,</span>
     <span class="c1">#     default=&quot;&quot;,</span>
@@ -675,8 +679,8 @@
     <span class="k">def</span> <span class="nf">get_extra_meta_field_list</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="s2">&quot;created_by&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;updated_by&quot;</span><span class="p">,</span>
+                <span class="c1"># &quot;created_by&quot;,</span>
+                <span class="c1"># &quot;updated_by&quot;,</span>
                 <span class="c1"># &quot;data_source&quot;,</span>
                 <span class="s2">&quot;note&quot;</span><span class="p">,</span>
                 <span class="c1"># &quot;version_number&quot;,</span>
@@ -763,9 +767,7 @@
 
             <details class="quote">
               <summary>Source code in <code>django_util/models.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span>
@@ -776,7 +778,9 @@
 <span class="normal">157</span>
 <span class="normal">158</span>
 <span class="normal">159</span>
-<span class="normal">160</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BasePublicContribute</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BasePublicContribute</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enhanced abstract base model, use if data can be edited by public</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -834,9 +838,7 @@
 
             <details class="quote">
               <summary>Source code in <code>django_util/models.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">165</span>
 <span class="normal">166</span>
 <span class="normal">167</span>
 <span class="normal">168</span>
@@ -860,7 +862,9 @@
 <span class="normal">186</span>
 <span class="normal">187</span>
 <span class="normal">188</span>
-<span class="normal">189</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">EmailHttpRequest</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">EmailHttpRequest</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract model that stores email and HttpRequest fields</span>
 <span class="sd">    &quot;&quot;&quot;</span>
