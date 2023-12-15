@@ -54,14 +54,14 @@ class Base(models.Model):
         editable=False,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="%(class)s_created_by",
+        # related_name="%(class)s_created_by",
     )
     updated_by = models.ForeignKey(
         Profile,
         editable=False,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="%(class)s_updated_by",
+        # related_name="%(class)s_updated_by",
     )
     # data_source = UpperTextField(
     #     blank=True,
@@ -161,6 +161,10 @@ class BasePublicContribute(Base):
 
 
 class EmailHttpRequest(Base):
+    """
+    Abstract model that stores email and HttpRequest fields
+    """
+
     email = models.EmailField(
         db_index=True,
     )
