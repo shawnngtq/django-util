@@ -170,7 +170,11 @@ class EmailHttpRequest(Base):
     email = models.EmailField(
         db_index=True,
     )
-    http_referer = UpperTextField(
+    campaign = UpperTextField(
+        blank=True,
+        default="",
+    )
+    http_referrer = UpperTextField(
         blank=True,
         default="",
     )
