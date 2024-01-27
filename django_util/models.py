@@ -1,7 +1,16 @@
-from django.contrib.auth.models import User
-from django.db import models
-from django.utils.translation import gettext_lazy as _
+import uuid
 
+from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MinValueValidator
+from django.db import models
+
+from django_util.choices import (
+    PersonBloodChoices,
+    PersonEyeColorChoices,
+    PersonGenderChoices,
+    PersonRaceChoices,
+)
 from django_util.fields import UpperTextField, complex_fields, related_fields
 
 
@@ -52,33 +61,17 @@ class Base(models.Model):
     # The field ConcreteModel.created_by was declared with a lazy reference to 'django_util.profile', but app 'django_util' doesn't provide model 'profile'.
     # The field ConcreteModel.updated_by was declared with a lazy reference to 'django_util.profile', but app 'django_util' doesn't provide model 'profile'.
     # created_by = models.ForeignKey(
+    # updated_by = models.ForeignKey(
     #     Profile,
     #     editable=False,
     #     null=True,
     #     on_delete=models.SET_NULL,
     #     related_name="%(class)s_created_by",
     # )
-    # updated_by = models.ForeignKey(
-    #     Profile,
-    #     editable=False,
-    #     null=True,
-    #     on_delete=models.SET_NULL,
-    #     related_name="%(class)s_updated_by",
-    # )
-    # data_source = UpperTextField(
-    #     blank=True,
-    #     default="",
-    # )
     note = UpperTextField(
         blank=True,
         default="",
     )
-    # if default=1, model formset will become required as it is no longer empty, exclude version_number in formset
-    # version_number = models.PositiveBigIntegerField(
-    #     blank=True,
-    #     default=1,
-    #     null=True,
-    # )
     is_admin_verified = models.BooleanField(
         default=False,
         editable=False,
@@ -102,9 +95,7 @@ class Base(models.Model):
             [
                 # "created_by",
                 # "updated_by",
-                # "data_source",
                 "note",
-                # "version_number",
                 "is_admin_verified",
             ]
         )
@@ -162,7 +153,7 @@ class BasePublicContribute(Base):
         abstract = True
 
 
-class EmailHttpRequest(Base):
+class EmailHttpRequest(models.Model):
     """
     Abstract model that stores email and HttpRequest fields
     """
@@ -189,6 +180,93 @@ class EmailHttpRequest(Base):
     remote_host = UpperTextField(
         blank=True,
         default="",
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Person(models.Model):
+    """
+    Abstract Person model
+
+    Reference
+    ---------
+    https://schema.org/Person
+    """
+
+    uuid = models.UUIDField(
+        db_index=True,
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+    )
+
+    english_first_name = UpperTextField(
+        default="",
+    )
+    english_middle_name = UpperTextField(
+        blank=True,
+        default="",
+    )
+    english_last_name = UpperTextField(
+        default="",
+    )
+    native_first_name = UpperTextField(
+        blank=True,
+        default="",
+    )
+    native_middle_name = UpperTextField(
+        blank=True,
+        default="",
+    )
+    native_last_name = UpperTextField(
+        blank=True,
+        default="",
+    )
+    alias = ArrayField(
+        UpperTextField(),
+        blank=True,
+        null=True,
+    )
+    description = UpperTextField(
+        blank=True,
+        default="",
+    )
+
+    # biology
+    birth_date = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    death_date = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    blood_type = UpperTextField(
+        blank=True,
+        choices=PersonBloodChoices.choices,
+        default=PersonBloodChoices.DEFAULT,
+    )
+    eye_color = UpperTextField(
+        blank=True,
+        choices=PersonEyeColorChoices.choices,
+        default=PersonEyeColorChoices.DEFAULT,
+    )
+    gender = UpperTextField(
+        blank=True,
+        choices=PersonGenderChoices.choices,
+        default=PersonGenderChoices.DEFAULT,
+    )
+    race = UpperTextField(
+        blank=True,
+        choices=PersonRaceChoices.choices,
+        default=PersonRaceChoices.DEFAULT,
+    )
+    height = models.PositiveSmallIntegerField(
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(1)],
     )
 
     class Meta:
