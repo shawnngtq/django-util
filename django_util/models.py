@@ -152,6 +152,15 @@ class BasePublicContribute(Base):
     class Meta:
         abstract = True
 
+    @staticmethod
+    def get_staff_only_field_list():
+        return sorted(
+            [
+                "is_hidden",
+                "is_verified",
+            ]
+        )
+
 
 class EmailHttpRequest(models.Model):
     """
