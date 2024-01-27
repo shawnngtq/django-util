@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
       
       
 
@@ -53,9 +53,6 @@
   
     <body dir="ltr">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -107,6 +104,9 @@
     </div>
     
     
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
     
     
   </nav>
@@ -150,6 +150,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
         
@@ -166,6 +167,7 @@
     
       
       
+  
   
   
   
@@ -188,6 +190,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../models/" class="md-nav__link">
         
@@ -204,6 +207,7 @@
     
       
       
+  
   
   
   
@@ -249,7 +253,36 @@
       
         <li class="md-nav__item">
   <a href="#django_util.choices" class="md-nav__link">
-    choices
+    <span class="md-ellipsis">
+      choices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django_util.choices.PersonEducationLevelChoices" class="md-nav__link">
+    <span class="md-ellipsis">
+      PersonEducationLevelChoices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django_util.choices.PersonEyeColorChoices" class="md-nav__link">
+    <span class="md-ellipsis">
+      PersonEyeColorChoices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django_util.choices.PersonRaceChoices" class="md-nav__link">
+    <span class="md-ellipsis">
+      PersonRaceChoices
+    </span>
   </a>
   
 </li>
@@ -290,6 +323,213 @@
 
 
 
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="django_util.choices.PersonEducationLevelChoices" class="doc doc-heading">
+          <code>PersonEducationLevelChoices</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
+
+  
+      <p>https://study.com/different_degrees.html</p>
+
+            <details class="quote">
+              <summary>Source code in <code>django_util/choices.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEducationLevelChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://study.com/different_degrees.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+    <span class="n">HIGH_SCHOOL</span> <span class="o">=</span> <span class="s2">&quot;HIGH_SCHOOL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;HIGH SCHOOL&quot;</span><span class="p">)</span>
+    <span class="n">ASSOCIATE</span> <span class="o">=</span> <span class="s2">&quot;ASSOCIATE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;ASSOCIATE DEGREE&quot;</span><span class="p">)</span>
+    <span class="n">BACHELOR</span> <span class="o">=</span> <span class="s2">&quot;BACHELOR&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;BACHELOR&#39;S DEGREE&quot;</span><span class="p">)</span>
+    <span class="n">MASTER</span> <span class="o">=</span> <span class="s2">&quot;MASTER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;MASTER&#39;S DEGREE&quot;</span><span class="p">)</span>
+    <span class="n">DOCTORAL</span> <span class="o">=</span> <span class="s2">&quot;DOCTORAL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;DOCTORAL DEGREE&quot;</span><span class="p">)</span>
+    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OTHERS&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="django_util.choices.PersonEyeColorChoices" class="doc doc-heading">
+          <code>PersonEyeColorChoices</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
+
+  
+      <p>https://en.wikipedia.org/wiki/Eye_color#Eye_color_chart_(Martin_scale)</p>
+
+            <details class="quote">
+              <summary>Source code in <code>django_util/choices.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEyeColorChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://en.wikipedia.org/wiki/Eye_color#Eye_color_chart_(Martin_scale)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+    <span class="n">AMBER</span> <span class="o">=</span> <span class="s2">&quot;AMBER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;AMBER&quot;</span><span class="p">)</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="s2">&quot;BLUE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;BLUE&quot;</span><span class="p">)</span>
+    <span class="n">BROWN</span> <span class="o">=</span> <span class="s2">&quot;BROWN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;BROWN&quot;</span><span class="p">)</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="s2">&quot;GREEN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;GREEN&quot;</span><span class="p">)</span>
+    <span class="n">GREY</span> <span class="o">=</span> <span class="s2">&quot;GREY&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;GREY&quot;</span><span class="p">)</span>
+    <span class="n">HAZEL</span> <span class="o">=</span> <span class="s2">&quot;HAZEL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;HAZEL&quot;</span><span class="p">)</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="s2">&quot;RED&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;RED&quot;</span><span class="p">)</span>
+    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OTHERS&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="django_util.choices.PersonRaceChoices" class="doc doc-heading">
+          <code>PersonRaceChoices</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
+
+  
+      <p>https://grants.nih.gov/grants/guide/notice-files/not-od-15-089.html</p>
+
+            <details class="quote">
+              <summary>Source code in <code>django_util/choices.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonRaceChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://grants.nih.gov/grants/guide/notice-files/not-od-15-089.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+    <span class="n">ASIAN</span> <span class="o">=</span> <span class="s2">&quot;ASIAN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;ASIAN&quot;</span><span class="p">)</span>
+    <span class="n">BLACK</span> <span class="o">=</span> <span class="s2">&quot;BLACK&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;BLACK OR AFRICAN AMERICAN&quot;</span><span class="p">)</span>
+    <span class="n">HISPANIC</span> <span class="o">=</span> <span class="s2">&quot;HISPANIC&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;HISPANIC OR LATINO&quot;</span><span class="p">)</span>
+    <span class="n">INDIAN</span> <span class="o">=</span> <span class="s2">&quot;INDIAN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;AMERICAN INDIAN OR ALASKA NATIVE&quot;</span><span class="p">)</span>
+    <span class="n">ISLANDER</span> <span class="o">=</span> <span class="s2">&quot;ISLANDER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER&quot;</span><span class="p">)</span>
+    <span class="n">WHITE</span> <span class="o">=</span> <span class="s2">&quot;WHITE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;WHITE&quot;</span><span class="p">)</span>
+    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OTHERS&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
 
 
 
@@ -303,11 +543,19 @@
 
 
 
+
+
+
+
+
+
+
                 
               </article>
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
@@ -335,10 +583,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
     
   </body>
