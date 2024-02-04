@@ -280,3 +280,112 @@ class Person(models.Model):
 
     class Meta:
         abstract = True
+
+
+class FullCalendarEventParseV6(models.Model):
+    """
+    FullCalendar Event
+
+    Reference
+    ---------
+    https://fullcalendar.io/docs/event-parsing
+    """
+
+    group_id = models.TextField(
+        blank=True,
+        default="",
+    )
+    all_day = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+    start = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    end = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    days_of_week = ArrayField(
+        models.TextField(),
+        blank=True,
+        null=True,
+    )
+    start_time = models.TimeField(
+        blank=True,
+        null=True,
+    )
+    end_time = models.TimeField(
+        blank=True,
+        null=True,
+    )
+    start_recur = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    end_recur = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    title = models.TextField(
+        blank=True,
+        default="",
+    )
+    url = models.URLField(
+        blank=True,
+        default="",
+    )
+    interactive = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+    class_name = ArrayField(
+        models.TextField(),
+        blank=True,
+        null=True,
+    )
+    editable = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+    start_editable = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+    duration_editable = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+    resource_editable = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+    resource_id = models.TextField(
+        blank=True,
+        default="",
+    )
+    resource_ids = ArrayField(
+        models.TextField(),
+        blank=True,
+        null=True,
+    )
+    display = models.TextField(
+        blank=True,
+        default="",
+    )
+    overlap = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+    constraint = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+    color = models.BooleanField(
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        abstract = True
