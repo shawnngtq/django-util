@@ -7,6 +7,9 @@ from django_util.models import Profile
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
+    """
+    When User object is created, create Profile object
+    """
     if created:
         Profile.objects.create(user=instance)
     else:

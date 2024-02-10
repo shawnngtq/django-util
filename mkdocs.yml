@@ -8,6 +8,10 @@ plugins:
 
 nav:
   - index.md
+  - choices.md
   - fields.md
   - models.md
   - signals.md
+  - templatetags.md
+  - utility.md
+  - validators.md

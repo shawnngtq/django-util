@@ -201,7 +201,7 @@ class Person(models.Model):
 
     Reference
     ---------
-    https://schema.org/Person
+    - https://schema.org/Person
     """
 
     uuid = models.UUIDField(
@@ -288,7 +288,7 @@ class FullCalendarEventParseV6(models.Model):
 
     Reference
     ---------
-    https://fullcalendar.io/docs/event-parsing
+    - https://fullcalendar.io/docs/v6/event-parsing
     """
 
     group_id = models.TextField(

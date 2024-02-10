@@ -9,6 +9,10 @@ TRUE_FALSE_CHOICES = [
 
 
 class PersonBloodChoices(models.TextChoices):
+    """
+    Person blood enumeration
+    """
+
     DEFAULT = "", _("---")
     A = "A", _("A")
     B = "B", _("B")
@@ -19,7 +23,11 @@ class PersonBloodChoices(models.TextChoices):
 
 class PersonEducationLevelChoices(models.TextChoices):
     """
-    https://study.com/different_degrees.html
+    Person education level enumeration
+
+    Reference
+    ---------
+    - https://study.com/different_degrees.html
     """
 
     DEFAULT = "", _("---")
@@ -33,7 +41,11 @@ class PersonEducationLevelChoices(models.TextChoices):
 
 class PersonEyeColorChoices(models.TextChoices):
     """
-    https://en.wikipedia.org/wiki/Eye_color#Eye_color_chart_(Martin_scale)
+    Person eye color enumeration
+
+    Reference
+    ---------
+    - https://en.wikipedia.org/wiki/Eye_color#Eye_color_chart_(Martin_scale)
     """
 
     DEFAULT = "", _("---")
@@ -48,6 +60,10 @@ class PersonEyeColorChoices(models.TextChoices):
 
 
 class PersonGenderChoices(models.TextChoices):
+    """
+    Person gender enumeration
+    """
+
     DEFAULT = "", _("---")
     FEMALE = "FEMALE", _("FEMALE")
     MALE = "MALE", _("MALE")
@@ -56,7 +72,11 @@ class PersonGenderChoices(models.TextChoices):
 
 class PersonRaceChoices(models.TextChoices):
     """
-    https://grants.nih.gov/grants/guide/notice-files/not-od-15-089.html
+    Person race enumeration
+
+    Reference
+    ---------
+    - https://grants.nih.gov/grants/guide/notice-files/not-od-15-089.html
     """
 
     DEFAULT = "", _("---")
