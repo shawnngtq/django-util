@@ -389,3 +389,37 @@ class FullCalendarEventParseV6(models.Model):
 
     class Meta:
         abstract = True
+
+
+class WiseWebhook(models.Model):
+    """
+    Wise Webhook
+
+    Reference
+    ---------
+    - https://docs.wise.com/api-docs/api-reference/webhook
+    """
+
+    data = models.JSONField(
+        blank=True,
+        null=True,
+    )
+    subscription_id = models.TextField(
+        blank=True,
+        default="",
+    )
+    event_type = models.TextField(
+        blank=True,
+        default="",
+    )
+    schema_version = models.TextField(
+        blank=True,
+        default="",
+    )
+    sent_at = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        abstract = True
