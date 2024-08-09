@@ -10,12 +10,20 @@ TRUE_FALSE_CHOICES = [
 
 # Generic
 class FlatOrPercentChoices(models.TextChoices):
+    """
+    Flat or percent enumeration
+    """
+
     DEFAULT = "", _("---")
     FLAT = "FLAT", _("Flat")
     PERCENT = "PERCENT", _("Percent")
 
 
 class TimeFrequencyChoices(models.TextChoices):
+    """
+    Time frequency enumeration
+    """
+
     DEFAULT = "", _("---")
     HOURLY = "HOURLY", _("Hourly")
     DAILY = "DAILY", _("Daily")
@@ -109,6 +117,10 @@ class PersonRaceChoices(models.TextChoices):
 
 # Payment / Transaction
 class PaymentMethodTypeChoices(models.TextChoices):
+    """
+    Payment method type enumeration
+    """
+
     DEFAULT = "", _("---")
     CREDIT_CARD = "CREDIT_CARD", _("Credit Card")
     DEBIT_CARD = "DEBIT_CARD", _("Debit Card")
@@ -119,6 +131,10 @@ class PaymentMethodTypeChoices(models.TextChoices):
 
 
 class TransactionGatewayChoices(models.TextChoices):
+    """
+    Transaction gateway enumeration
+    """
+
     DEFAULT = "", _("---")
     ADYEN = "ADYEN", _("Adyen")
     ALIPAY = "ALIPAY", _("Alipay")
@@ -153,6 +169,10 @@ class TransactionStateChoices(models.TextChoices):
 
 
 class TransactionTypeChoices(models.TextChoices):
+    """
+    Transaction type enumeration
+    """
+
     DEFAULT = "", _("---")
     PAYMENT = "PAYMENT", _("Payment")
     REFUND = "REFUND", _("Refund")
@@ -162,6 +182,10 @@ class TransactionTypeChoices(models.TextChoices):
 
 
 class TransactionEventTypeChoices(models.TextChoices):
+    """
+    Transaction event type enumeration
+    """
+
     DEFAULT = "", _("---")
     CREATED = "CREATED", _("Created")
     AUTHORIZED = "AUTHORIZED", _("Authorized")

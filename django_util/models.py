@@ -505,6 +505,10 @@ class TransactionEvent(models.Model):
 
 
 class PaymentMethod(models.Model):
+    """
+    Abstract payment model
+    """
+
     choice_type = UpperTextField(
         blank=True,
         choices=PaymentMethodTypeChoices.choices,
@@ -523,6 +527,10 @@ class PaymentMethod(models.Model):
 
 
 class CardPayment(PaymentMethod):
+    """
+    Card payment inherit PayMethod abstract model
+    """
+
     card_number = models.TextField(
         blank=True,
         default="",
@@ -541,6 +549,10 @@ class CardPayment(PaymentMethod):
 
 
 class Coupon(models.Model):
+    """
+    Coupon discount
+    """
+
     code = models.TextField(
         blank=True,
         default="",
