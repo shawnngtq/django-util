@@ -320,6 +320,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#django_util.choices.TransactionStateChoices" class="md-nav__link">
+    <span class="md-ellipsis">
+      TransactionStateChoices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TransactionStateChoices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django_util.choices.TransactionStateChoices--reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -573,6 +597,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#django_util.choices.TransactionStateChoices" class="md-nav__link">
+    <span class="md-ellipsis">
+      TransactionStateChoices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TransactionStateChoices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django_util.choices.TransactionStateChoices--reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -629,17 +677,17 @@
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonBloodChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonBloodChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Person blood enumeration</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -649,7 +697,7 @@
     <span class="n">B</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
     <span class="n">AB</span> <span class="o">=</span> <span class="s2">&quot;AB&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;AB&quot;</span><span class="p">)</span>
     <span class="n">O</span> <span class="o">=</span> <span class="s2">&quot;O&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;O&quot;</span><span class="p">)</span>
-    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OTHERS&quot;</span><span class="p">)</span>
+    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Others&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -697,22 +745,22 @@
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEducationLevelChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEducationLevelChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Person education level enumeration</span>
 
@@ -722,12 +770,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
-    <span class="n">HIGH_SCHOOL</span> <span class="o">=</span> <span class="s2">&quot;HIGH_SCHOOL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;HIGH SCHOOL&quot;</span><span class="p">)</span>
-    <span class="n">ASSOCIATE</span> <span class="o">=</span> <span class="s2">&quot;ASSOCIATE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;ASSOCIATE DEGREE&quot;</span><span class="p">)</span>
-    <span class="n">BACHELOR</span> <span class="o">=</span> <span class="s2">&quot;BACHELOR&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;BACHELOR&#39;S DEGREE&quot;</span><span class="p">)</span>
-    <span class="n">MASTER</span> <span class="o">=</span> <span class="s2">&quot;MASTER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;MASTER&#39;S DEGREE&quot;</span><span class="p">)</span>
-    <span class="n">DOCTORAL</span> <span class="o">=</span> <span class="s2">&quot;DOCTORAL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;DOCTORAL DEGREE&quot;</span><span class="p">)</span>
-    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OTHERS&quot;</span><span class="p">)</span>
+    <span class="n">HIGH_SCHOOL</span> <span class="o">=</span> <span class="s2">&quot;HIGH_SCHOOL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;High School&quot;</span><span class="p">)</span>
+    <span class="n">ASSOCIATE</span> <span class="o">=</span> <span class="s2">&quot;ASSOCIATE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Associate Degree&quot;</span><span class="p">)</span>
+    <span class="n">BACHELOR</span> <span class="o">=</span> <span class="s2">&quot;BACHELOR&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Bachelor&#39;s Degree&quot;</span><span class="p">)</span>
+    <span class="n">MASTER</span> <span class="o">=</span> <span class="s2">&quot;MASTER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Master&#39;s Degree&quot;</span><span class="p">)</span>
+    <span class="n">DOCTORAL</span> <span class="o">=</span> <span class="s2">&quot;DOCTORAL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Doctoral Degree&quot;</span><span class="p">)</span>
+    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Others&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -775,24 +823,24 @@
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEyeColorChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEyeColorChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Person eye color enumeration</span>
 
@@ -802,14 +850,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
-    <span class="n">AMBER</span> <span class="o">=</span> <span class="s2">&quot;AMBER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;AMBER&quot;</span><span class="p">)</span>
-    <span class="n">BLUE</span> <span class="o">=</span> <span class="s2">&quot;BLUE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;BLUE&quot;</span><span class="p">)</span>
-    <span class="n">BROWN</span> <span class="o">=</span> <span class="s2">&quot;BROWN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;BROWN&quot;</span><span class="p">)</span>
-    <span class="n">GREEN</span> <span class="o">=</span> <span class="s2">&quot;GREEN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;GREEN&quot;</span><span class="p">)</span>
-    <span class="n">GREY</span> <span class="o">=</span> <span class="s2">&quot;GREY&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;GREY&quot;</span><span class="p">)</span>
-    <span class="n">HAZEL</span> <span class="o">=</span> <span class="s2">&quot;HAZEL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;HAZEL&quot;</span><span class="p">)</span>
-    <span class="n">RED</span> <span class="o">=</span> <span class="s2">&quot;RED&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;RED&quot;</span><span class="p">)</span>
-    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OTHERS&quot;</span><span class="p">)</span>
+    <span class="n">AMBER</span> <span class="o">=</span> <span class="s2">&quot;AMBER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Amber&quot;</span><span class="p">)</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="s2">&quot;BLUE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Blue&quot;</span><span class="p">)</span>
+    <span class="n">BROWN</span> <span class="o">=</span> <span class="s2">&quot;BROWN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Brown&quot;</span><span class="p">)</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="s2">&quot;GREEN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Green&quot;</span><span class="p">)</span>
+    <span class="n">GREY</span> <span class="o">=</span> <span class="s2">&quot;GREY&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Grey&quot;</span><span class="p">)</span>
+    <span class="n">HAZEL</span> <span class="o">=</span> <span class="s2">&quot;HAZEL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Hazel&quot;</span><span class="p">)</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="s2">&quot;RED&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Red&quot;</span><span class="p">)</span>
+    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Others&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -853,23 +901,23 @@
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonGenderChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonGenderChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Person gender enumeration</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
-    <span class="n">FEMALE</span> <span class="o">=</span> <span class="s2">&quot;FEMALE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;FEMALE&quot;</span><span class="p">)</span>
-    <span class="n">MALE</span> <span class="o">=</span> <span class="s2">&quot;MALE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;MALE&quot;</span><span class="p">)</span>
-    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OTHERS&quot;</span><span class="p">)</span>
+    <span class="n">FEMALE</span> <span class="o">=</span> <span class="s2">&quot;FEMALE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Female&quot;</span><span class="p">)</span>
+    <span class="n">MALE</span> <span class="o">=</span> <span class="s2">&quot;MALE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Male&quot;</span><span class="p">)</span>
+    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Others&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -917,23 +965,23 @@
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonRaceChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonRaceChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Person race enumeration</span>
 
@@ -943,13 +991,91 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
-    <span class="n">ASIAN</span> <span class="o">=</span> <span class="s2">&quot;ASIAN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;ASIAN&quot;</span><span class="p">)</span>
-    <span class="n">BLACK</span> <span class="o">=</span> <span class="s2">&quot;BLACK&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;BLACK OR AFRICAN AMERICAN&quot;</span><span class="p">)</span>
-    <span class="n">HISPANIC</span> <span class="o">=</span> <span class="s2">&quot;HISPANIC&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;HISPANIC OR LATINO&quot;</span><span class="p">)</span>
-    <span class="n">INDIAN</span> <span class="o">=</span> <span class="s2">&quot;INDIAN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;AMERICAN INDIAN OR ALASKA NATIVE&quot;</span><span class="p">)</span>
-    <span class="n">ISLANDER</span> <span class="o">=</span> <span class="s2">&quot;ISLANDER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER&quot;</span><span class="p">)</span>
-    <span class="n">WHITE</span> <span class="o">=</span> <span class="s2">&quot;WHITE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;WHITE&quot;</span><span class="p">)</span>
-    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OTHERS&quot;</span><span class="p">)</span>
+    <span class="n">ASIAN</span> <span class="o">=</span> <span class="s2">&quot;ASIAN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Asian&quot;</span><span class="p">)</span>
+    <span class="n">BLACK</span> <span class="o">=</span> <span class="s2">&quot;BLACK&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Black Or African American&quot;</span><span class="p">)</span>
+    <span class="n">HISPANIC</span> <span class="o">=</span> <span class="s2">&quot;HISPANIC&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Hispanic Or Latino&quot;</span><span class="p">)</span>
+    <span class="n">INDIAN</span> <span class="o">=</span> <span class="s2">&quot;INDIAN&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;American Indian Or Alaska Native&quot;</span><span class="p">)</span>
+    <span class="n">ISLANDER</span> <span class="o">=</span> <span class="s2">&quot;ISLANDER&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Native Hawaiian Or Other Pacific Islander&quot;</span><span class="p">)</span>
+    <span class="n">WHITE</span> <span class="o">=</span> <span class="s2">&quot;WHITE&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;White&quot;</span><span class="p">)</span>
+    <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Others&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="django_util.choices.TransactionStateChoices" class="doc doc-heading">
+            <code>TransactionStateChoices</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
+
+
+      <p>Transaction state enumeration</p>
+<h4 id="django_util.choices.TransactionStateChoices--reference">Reference</h4>
+<ul>
+<li>https://stripe.com/docs/payments/intents#intent-statuses</li>
+</ul>
+
+              <details class="quote">
+                <summary>Source code in <code>django_util/choices.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionStateChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transaction state enumeration</span>
+
+<span class="sd">    Reference</span>
+<span class="sd">    ---------</span>
+<span class="sd">    - https://stripe.com/docs/payments/intents#intent-statuses</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+    <span class="n">REQUIRES_PAYMENT_METHOD</span> <span class="o">=</span> <span class="s2">&quot;REQUIRES_PAYMENT_METHOD&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Requires Payment Method&quot;</span><span class="p">)</span>
+    <span class="n">REQUIRES_CONFIRMATION</span> <span class="o">=</span> <span class="s2">&quot;REQUIRES_CONFIRMATION&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Requires Confirmation&quot;</span><span class="p">)</span>
+    <span class="n">REQUIRES_ACTION</span> <span class="o">=</span> <span class="s2">&quot;REQUIRES_ACTION&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Requires Action&quot;</span><span class="p">)</span>
+    <span class="n">PROCESSING</span> <span class="o">=</span> <span class="s2">&quot;PROCESSING&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Processing&quot;</span><span class="p">)</span>
+    <span class="n">CANCEL</span> <span class="o">=</span> <span class="s2">&quot;CANCEL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Cancel&quot;</span><span class="p">)</span>
+    <span class="n">SUCCESS</span> <span class="o">=</span> <span class="s2">&quot;SUCCESS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
