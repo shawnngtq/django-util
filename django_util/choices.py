@@ -3,11 +3,29 @@ from django.utils.translation import gettext_lazy as _
 
 TRUE_FALSE_CHOICES = [
     ("", "---"),
-    (True, "TRUE"),
-    (False, "FALSE"),
+    (True, "True"),
+    (False, "False"),
 ]
 
 
+# Generic
+class FlatOrPercentChoices(models.TextChoices):
+    DEFAULT = "", _("---")
+    FLAT = "FLAT", _("Flat")
+    PERCENT = "PERCENT", _("Percent")
+
+
+class TimeFrequencyChoices(models.TextChoices):
+    DEFAULT = "", _("---")
+    HOURLY = "HOURLY", _("Hourly")
+    DAILY = "DAILY", _("Daily")
+    WEEKLY = "WEEKLY", _("Weekly")
+    MONTHLY = "MONTHLY", _("Monthly")
+    QUARTERLY = "QUARTERLY", _("Quarterly")
+    ANNUALLY = "ANNUALLY", _("Annually")
+
+
+# Person
 class PersonBloodChoices(models.TextChoices):
     """
     Person blood enumeration
@@ -18,7 +36,7 @@ class PersonBloodChoices(models.TextChoices):
     B = "B", _("B")
     AB = "AB", _("AB")
     O = "O", _("O")
-    OTHERS = "OTHERS", _("OTHERS")
+    OTHERS = "OTHERS", _("Others")
 
 
 class PersonEducationLevelChoices(models.TextChoices):
@@ -31,12 +49,12 @@ class PersonEducationLevelChoices(models.TextChoices):
     """
 
     DEFAULT = "", _("---")
-    HIGH_SCHOOL = "HIGH_SCHOOL", _("HIGH SCHOOL")
-    ASSOCIATE = "ASSOCIATE", _("ASSOCIATE DEGREE")
-    BACHELOR = "BACHELOR", _("BACHELOR'S DEGREE")
-    MASTER = "MASTER", _("MASTER'S DEGREE")
-    DOCTORAL = "DOCTORAL", _("DOCTORAL DEGREE")
-    OTHERS = "OTHERS", _("OTHERS")
+    HIGH_SCHOOL = "HIGH_SCHOOL", _("High School")
+    ASSOCIATE = "ASSOCIATE", _("Associate Degree")
+    BACHELOR = "BACHELOR", _("Bachelor's Degree")
+    MASTER = "MASTER", _("Master's Degree")
+    DOCTORAL = "DOCTORAL", _("Doctoral Degree")
+    OTHERS = "OTHERS", _("Others")
 
 
 class PersonEyeColorChoices(models.TextChoices):
@@ -49,14 +67,14 @@ class PersonEyeColorChoices(models.TextChoices):
     """
 
     DEFAULT = "", _("---")
-    AMBER = "AMBER", _("AMBER")
-    BLUE = "BLUE", _("BLUE")
-    BROWN = "BROWN", _("BROWN")
-    GREEN = "GREEN", _("GREEN")
-    GREY = "GREY", _("GREY")
-    HAZEL = "HAZEL", _("HAZEL")
-    RED = "RED", _("RED")
-    OTHERS = "OTHERS", _("OTHERS")
+    AMBER = "AMBER", _("Amber")
+    BLUE = "BLUE", _("Blue")
+    BROWN = "BROWN", _("Brown")
+    GREEN = "GREEN", _("Green")
+    GREY = "GREY", _("Grey")
+    HAZEL = "HAZEL", _("Hazel")
+    RED = "RED", _("Red")
+    OTHERS = "OTHERS", _("Others")
 
 
 class PersonGenderChoices(models.TextChoices):
@@ -65,9 +83,9 @@ class PersonGenderChoices(models.TextChoices):
     """
 
     DEFAULT = "", _("---")
-    FEMALE = "FEMALE", _("FEMALE")
-    MALE = "MALE", _("MALE")
-    OTHERS = "OTHERS", _("OTHERS")
+    FEMALE = "FEMALE", _("Female")
+    MALE = "MALE", _("Male")
+    OTHERS = "OTHERS", _("Others")
 
 
 class PersonRaceChoices(models.TextChoices):
@@ -80,10 +98,73 @@ class PersonRaceChoices(models.TextChoices):
     """
 
     DEFAULT = "", _("---")
-    ASIAN = "ASIAN", _("ASIAN")
-    BLACK = "BLACK", _("BLACK OR AFRICAN AMERICAN")
-    HISPANIC = "HISPANIC", _("HISPANIC OR LATINO")
-    INDIAN = "INDIAN", _("AMERICAN INDIAN OR ALASKA NATIVE")
-    ISLANDER = "ISLANDER", _("NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER")
-    WHITE = "WHITE", _("WHITE")
-    OTHERS = "OTHERS", _("OTHERS")
+    ASIAN = "ASIAN", _("Asian")
+    BLACK = "BLACK", _("Black Or African American")
+    HISPANIC = "HISPANIC", _("Hispanic Or Latino")
+    INDIAN = "INDIAN", _("American Indian Or Alaska Native")
+    ISLANDER = "ISLANDER", _("Native Hawaiian Or Other Pacific Islander")
+    WHITE = "WHITE", _("White")
+    OTHERS = "OTHERS", _("Others")
+
+
+# Payment / Transaction
+class PaymentMethodTypeChoices(models.TextChoices):
+    DEFAULT = "", _("---")
+    CREDIT_CARD = "CREDIT_CARD", _("Credit Card")
+    DEBIT_CARD = "DEBIT_CARD", _("Debit Card")
+    ELECTRONIC_BANK_TRANSFER = "BANK_TRANSFER", _("Bank Transfer")
+    PAYPAL = "PAYPAL", _("Paypal")
+    APPLE_PAY = "APPLE_PAY", _("Apple Pay")
+    GOOGLE_PAY = "GOOGLE_PAY", _("Google Pay")
+
+
+class TransactionGatewayChoices(models.TextChoices):
+    DEFAULT = "", _("---")
+    ADYEN = "ADYEN", _("Adyen")
+    ALIPAY = "ALIPAY", _("Alipay")
+    AMAZON = "AMAZON", _("Amazon")
+    AUTHORIZE = "AUTHORIZE", _("Authorize")
+    BRAINTREE = "BRAINTREE", _("Braintree")
+    CYBERSOURCE = "CYBERSOURCE", _("Cybersource")
+    INGENICO = "INGENICO", _("Ingenico")
+    PAYPAL = "PAYPAL", _("Paypal")
+    SQUARE = "SQUARE", _("Square")
+    STRIPE = "STRIPE", _("Stripe")
+    WEPAY = "WEPAY", _("Wepay")
+    WORLDPAY = "WORLDPAY", _("Worldpay")
+
+
+class TransactionStateChoices(models.TextChoices):
+    """
+    Transaction state enumeration
+
+    Reference
+    ---------
+    - https://stripe.com/docs/payments/intents#intent-statuses
+    """
+
+    DEFAULT = "", _("---")
+    REQUIRES_PAYMENT_METHOD = "REQUIRES_PAYMENT_METHOD", _("Requires Payment Method")
+    REQUIRES_CONFIRMATION = "REQUIRES_CONFIRMATION", _("Requires Confirmation")
+    REQUIRES_ACTION = "REQUIRES_ACTION", _("Requires Action")
+    PROCESSING = "PROCESSING", _("Processing")
+    CANCEL = "CANCEL", _("Cancel")
+    SUCCESS = "SUCCESS", _("Success")
+
+
+class TransactionTypeChoices(models.TextChoices):
+    DEFAULT = "", _("---")
+    PAYMENT = "PAYMENT", _("Payment")
+    REFUND = "REFUND", _("Refund")
+    ADJUSTMENT = "ADJUSTMENT", _("Adjustment")
+    COUPON = "COUPON", _("Coupon")
+    PRORATION = "PRORATION", _("Proration")
+
+
+class TransactionEventTypeChoices(models.TextChoices):
+    DEFAULT = "", _("---")
+    CREATED = "CREATED", _("Created")
+    AUTHORIZED = "AUTHORIZED", _("Authorized")
+    CAPTURED = "CAPTURED", _("Captured")
+    REFUNDED = "REFUNDED", _("Refunded")
+    FAILED = "FAILED", _("Failed")

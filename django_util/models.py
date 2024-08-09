@@ -6,10 +6,16 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from django_util.choices import (
+    FlatOrPercentChoices,
+    PaymentMethodTypeChoices,
     PersonBloodChoices,
     PersonEyeColorChoices,
     PersonGenderChoices,
     PersonRaceChoices,
+    TimeFrequencyChoices,
+    TransactionEventTypeChoices,
+    TransactionStateChoices,
+    TransactionTypeChoices,
 )
 from django_util.fields import UpperTextField, complex_fields, related_fields
 
@@ -402,7 +408,7 @@ class WiseWebhook(models.Model):
 
     data = models.JSONField(
         blank=True,
-        null=True,
+        default=dict,
     )
     subscription_id = models.TextField(
         blank=True,
@@ -420,6 +426,230 @@ class WiseWebhook(models.Model):
         blank=True,
         null=True,
     )
+
+    class Meta:
+        abstract = True
+
+
+class Transaction(models.Model):
+    """
+    Records a monetary exchange related to a subscription (e.g., payment, refund). The transactions table records monetary exchanges related to subscriptions.
+
+    Reference
+    ---------
+    Transaction Amount encompasses the total monetary value of a transaction. Includes the base price of the item(s), taxes, shipping fees, any additional charges, and potentially discounts or credits applied. Is the final figure paid or received.
+
+    Transaction Price often refers more specifically to the base price of the item or service being exchanged. Excludes taxes, fees, and other charges. Can be considered the core value of the transaction.
+    """
+
+    amount = models.DecimalField(
+        max_digits=19,
+        decimal_places=4,
+    )
+    currency = UpperTextField(
+        max_length=3,
+        blank=True,
+    )
+    choice_type = UpperTextField(
+        blank=True,
+        choices=TransactionTypeChoices.choices,
+        default=TransactionTypeChoices.DEFAULT,
+    )
+    data = models.JSONField(
+        blank=True,
+        default=dict,
+    )
+    state = UpperTextField(
+        blank=True,
+        choices=TransactionStateChoices.choices,
+        default=TransactionStateChoices.DEFAULT,
+    )
+    transaction_date = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+
+    # Relation
+    # coupon = models.ForeignKey
+    # payment_method = models.ForeignKey
+    # subscription = models.ForeignKey
+
+    class Meta:
+        abstract = True
+
+
+class TransactionEvent(models.Model):
+    """
+    Captures specific actions or changes within a transaction's lifecycle. The transaction_event table provides granular details about the transaction's lifecycle.
+    """
+
+    choice_type = UpperTextField(
+        blank=True,
+        choices=TransactionEventTypeChoices.choices,
+        default=TransactionEventTypeChoices.DEFAULT,
+    )
+    description = UpperTextField(
+        blank=True,
+        default="",
+    )
+    data = models.JSONField(
+        blank=True,
+        default=dict,
+    )
+
+    # Relation
+    # transaction = models.ForeignKey
+
+    class Meta:
+        abstract = True
+
+
+class PaymentMethod(models.Model):
+    choice_type = UpperTextField(
+        blank=True,
+        choices=PaymentMethodTypeChoices.choices,
+        default=PaymentMethodTypeChoices.DEFAULT,
+    )
+    billing_address = models.TextField(
+        blank=True,
+        default="",
+    )
+
+    # Relation
+    # profile = models.ForeignKey
+
+    class Meta:
+        abstract = True
+
+
+class CardPayment(PaymentMethod):
+    card_number = models.TextField(
+        blank=True,
+        default="",
+    )
+    card_expiry = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    card_cvv = models.TextField(
+        blank=True,
+        default="",
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Coupon(models.Model):
+    code = models.TextField(
+        blank=True,
+        default="",
+    )
+    discount_type = UpperTextField(
+        blank=True,
+        choices=FlatOrPercentChoices.choices,
+        default=FlatOrPercentChoices.DEFAULT,
+    )
+    discount_value = models.DecimalField(
+        max_digits=19,
+        decimal_places=4,
+    )
+    expiry_date = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    usage_limit = models.IntegerField(
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Plan(models.Model):
+    """
+    Plan: Defines the features, price, and billing cycle of a subscription.
+    """
+
+    name = UpperTextField(
+        blank=True,
+        default="",
+    )
+    description = UpperTextField(
+        blank=True,
+        default="",
+    )
+    price = models.DecimalField(
+        max_digits=19,
+        decimal_places=4,
+    )
+    currency = UpperTextField(
+        max_length=3,
+        blank=True,
+    )
+    billing_cycle = UpperTextField(
+        blank=True,
+        choices=TimeFrequencyChoices.choices,
+        default=TimeFrequencyChoices.DEFAULT,
+    )
+    feature = ArrayField(
+        UpperTextField(),
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class PlanPlus(models.Model):
+    """
+    Enhanced Plan
+    """
+
+    trial_period = (
+        models.IntegerField(
+            blank=True,
+            null=True,
+        ),
+    )
+    discount_eligible = models.BooleanField(
+        default=False,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Subscription(models.Model):
+    """
+    Represents a customer's active subscription to a plan. The subscriptions table tracks the active state of a customer's subscription, including its start and end dates.
+    """
+
+    start_date = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    end_date = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    next_billing_date = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
+    prorated_amount = models.DecimalField(
+        max_digits=19,
+        decimal_places=4,
+    )
+    is_active = models.BooleanField(
+        default=False,
+    )
+
+    # Relation
+    # plan = models.ForeignKey
+    # profile = models.ForeignKey
 
     class Meta:
         abstract = True
