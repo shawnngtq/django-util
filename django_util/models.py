@@ -615,7 +615,7 @@ class Plan(models.Model):
         abstract = True
 
 
-class PlanPlus(models.Model):
+class PlanPlus(Plan):
     """
     Enhanced Plan
     """
