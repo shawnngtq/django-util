@@ -620,11 +620,9 @@ class PlanPlus(Plan):
     Enhanced Plan
     """
 
-    trial_period = (
-        models.IntegerField(
-            blank=True,
-            null=True,
-        ),
+    trial_period = models.IntegerField(
+        blank=True,
+        null=True,
     )
     discount_eligible = models.BooleanField(
         default=False,
