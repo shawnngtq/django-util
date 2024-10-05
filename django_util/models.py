@@ -218,6 +218,7 @@ class Person(models.Model):
     )
 
     english_first_name = UpperTextField(
+        blank=True,
         default="",
     )
     english_middle_name = UpperTextField(
@@ -225,6 +226,7 @@ class Person(models.Model):
         default="",
     )
     english_last_name = UpperTextField(
+        blank=True,
         default="",
     )
     native_first_name = UpperTextField(
@@ -443,6 +445,8 @@ class Transaction(models.Model):
     """
 
     amount = models.DecimalField(
+        blank=True,
+        null=True,
         max_digits=19,
         decimal_places=4,
     )
@@ -470,7 +474,6 @@ class Transaction(models.Model):
     )
 
     # Relation
-    # coupon = models.ForeignKey
     # payment_method = models.ForeignKey
     # subscription = models.ForeignKey
 
@@ -563,6 +566,8 @@ class Coupon(models.Model):
         default=FlatOrPercentChoices.DEFAULT,
     )
     discount_value = models.DecimalField(
+        blank=True,
+        null=True,
         max_digits=19,
         decimal_places=4,
     )
@@ -593,6 +598,8 @@ class Plan(models.Model):
         default="",
     )
     price = models.DecimalField(
+        blank=True,
+        null=True,
         max_digits=19,
         decimal_places=4,
     )
@@ -650,6 +657,8 @@ class Subscription(models.Model):
         null=True,
     )
     prorated_amount = models.DecimalField(
+        blank=True,
+        null=True,
         max_digits=19,
         decimal_places=4,
     )
@@ -658,6 +667,7 @@ class Subscription(models.Model):
     )
 
     # Relation
+    # coupon = models.ForeignKey
     # plan = models.ForeignKey
     # profile = models.ForeignKey
 
