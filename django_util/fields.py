@@ -1,56 +1,55 @@
 from typing import Any
 from urllib.parse import urlparse
 
-from django.contrib.contenttypes.fields import GenericRelation
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import ManyToManyField, ManyToManyRel, ManyToOneRel
-
-# general
-related_fields = (
-    GenericRelation,
-    ManyToManyField,
-    ManyToManyRel,
-    ManyToOneRel,
-)
-
-complex_fields = (ArrayField,)
 
 
 # class
 class UpperTextField(models.TextField):
     """
     A TextField that is stripped and uppercase
+
+    Examples
+    --------
+    >>> field = UpperTextField()
+    >>> field.get_prep_value(" hello world ")
+    'HELLO WORLD'
+    >>> field.get_prep_value(None)
+    None
     """
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
-
-    def get_prep_value(self, value: Any) -> Any:
-        if value:
+    def get_prep_value(self, value: Any) -> str | None:
+        try:
             return str(value).strip().upper()
-        else:
-            return value
+        except (TypeError, AttributeError):
+            return None
 
 
 class NoParamURLField(models.URLField):
     """
-    A URLField that parse and keep only netloc and path
+    A URLField that stores URLs without query parameters or fragments.
+    Only preserves the network location (domain) and path components.
+
+    Examples
+    --------
+    >>> field = NoParamURLField()
+    >>> field.get_prep_value('https://example.com/path?query=1#fragment')
+    'example.com/path'
     """
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
-
-    def get_prep_value(self, value: Any) -> Any:
-        if value is not None:
-            tmp = urlparse(value)
-            output = tmp.netloc + tmp.path
-            return output
-        else:
+    def get_prep_value(self, value: Any) -> str | None:
+        try:
+            parsed = urlparse(value)
+            return parsed.netloc + parsed.path
+        except Exception:
             return None
 
+    def validate(self, value: Any, model_instance) -> None:
+        if value and not (urlparse(value).netloc and urlparse(value).path):
+            from django.core.exceptions import ValidationError
 
-# for admin.py
-list_display_exclude = tuple(list(related_fields) + list(complex_fields))
-list_filter_base = ["is_admin_verified"]
-list_filter_base_public_contribute = list_filter_base + ["is_verified"]
+            raise ValidationError("URL must contain both domain and path")
+        super().validate(value, model_instance)
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(max_length={self.max_length})"
