@@ -1,6 +1,14 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+__all__ = [
+    "TRUE_FALSE_CHOICES",
+    "FlatOrPercentChoices",
+    "TimeFrequencyChoices",
+    "PersonBloodChoices",
+    "PersonEducationLevelChoices",
+]
+
 TRUE_FALSE_CHOICES = [
     ("", "---"),
     (True, "True"),
