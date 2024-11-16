@@ -18,7 +18,8 @@ from django_util.choices import (
     TransactionStateChoices,
     TransactionTypeChoices,
 )
-from django_util.fields import UpperTextField, complex_fields, related_fields
+from django_util.fields import UpperTextField
+from django_util.constants import complex_fields, related_fields
 
 
 # abstract
