@@ -1,5 +1,6 @@
 import uuid
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator
@@ -64,16 +65,22 @@ class Base(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
     )
-    # The field ConcreteModel.created_by was declared with a lazy reference to 'django_util.profile', but app 'django_util' doesn't provide model 'profile'.
-    # The field ConcreteModel.updated_by was declared with a lazy reference to 'django_util.profile', but app 'django_util' doesn't provide model 'profile'.
-    # created_by = models.ForeignKey(
-    # updated_by = models.ForeignKey(
-    #     Profile,
-    #     editable=False,
-    #     null=True,
-    #     on_delete=models.SET_NULL,
-    #     related_name="%(class)s_created_by",
-    # )
+    created_by = models.ForeignKey(
+        getattr(settings, "PROFILE_MODEL", "auth.User"),
+        editable=False,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="%(class)s_created_by",
+    )
+    updated_by = models.ForeignKey(
+        getattr(settings, "PROFILE_MODEL", "auth.User"),
+        editable=False,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="%(class)s_updated_by",
+    )
     note = UpperTextField(
         blank=True,
         default="",
@@ -99,8 +106,8 @@ class Base(models.Model):
     def get_extra_meta_field_list() -> list:
         return sorted(
             [
-                # "created_by",
-                # "updated_by",
+                "created_by",
+                "updated_by",
                 "note",
                 "is_admin_verified",
             ]
