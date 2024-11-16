@@ -34,7 +34,7 @@ build_pypi() {
     rm -rf build
     rm -rf dist
     rm -rf django_util.egg-info
-    rm -rf django-util-*
+    rm -rf django_util-*
     # Build distribution
     python setup.py sdist bdist_wheel
 }
