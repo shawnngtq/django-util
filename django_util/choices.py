@@ -1,50 +1,187 @@
+"""Django choice field definitions for various data types.
+
+This module provides a collection of choice classes for use with Django models and forms.
+Each class inherits from BaseChoices and provides standardized options for different
+data types and business domains.
+
+Categories:
+    - Generic: Basic choice types like boolean, time frequency, etc.
+    - Person: Demographic and personal information choices
+    - Payment: Payment and transaction related choices
+
+Example:
+    from django_util.choices import TimeFrequencyChoices
+
+    class Subscription(models.Model):
+        frequency = models.CharField(
+            max_length=50,
+            choices=TimeFrequencyChoices.choices,
+            default=TimeFrequencyChoices.DEFAULT
+        )
+"""
+
+from datetime import timedelta
+from typing import Dict, List, Optional, Set, Tuple, Union
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-__all__ = [
-    "TRUE_FALSE_CHOICES",
+# Choice categories for better organization
+GENERIC_CHOICES = [
+    "BaseChoices",
+    "BooleanChoices",
     "FlatOrPercentChoices",
     "TimeFrequencyChoices",
-    "PersonBloodChoices",
-    "PersonEducationLevelChoices",
+    "TaskStatusChoices",
 ]
 
-TRUE_FALSE_CHOICES = [
+PERSON_CHOICES = [
+    "PersonBloodChoices",
+    "PersonEducationLevelChoices",
+    "PersonEyeColorChoices",
+    "PersonGenderChoices",
+    "PersonRaceChoices",
+]
+
+PAYMENT_CHOICES = [
+    "PaymentMethodTypeChoices",
+    "TransactionGatewayChoices",
+    "TransactionStateChoices",
+    "TransactionTypeChoices",
+    "TransactionEventTypeChoices",
+]
+
+__all__ = [
+    *GENERIC_CHOICES,
+    *PERSON_CHOICES,
+    *PAYMENT_CHOICES,
+]
+
+TRUE_FALSE_CHOICES: List[Tuple[Union[bool, str], str]] = [
     ("", "---"),
     (True, "True"),
     (False, "False"),
 ]
 
 
+class BaseChoices(models.TextChoices):
+    """Base class providing common functionality for all choice classes.
+
+    This class serves as the foundation for all choice classes in the module,
+    providing standard utility methods and consistent behavior.
+
+    Attributes:
+        DEFAULT (str): Empty string choice with "---" label
+
+    Methods:
+        get_values(): Returns set of all valid values excluding DEFAULT
+        get_labels(): Returns mapping of values to their display labels
+        is_valid(value): Checks if a value is valid for this choice set
+        get_label(value): Gets display label for a value
+        exclude_default(): Returns choices without the DEFAULT option
+    """
+
+    DEFAULT = "", _("---")
+
+    @classmethod
+    def get_values(cls) -> Set[str]:
+        """Return set of all valid values excluding DEFAULT.
+
+        Returns:
+            Set[str]: Set of all choice values except DEFAULT
+        """
+        return {choice[0] for choice in cls.choices if choice[0]}
+
+    @classmethod
+    def get_labels(cls) -> Dict[str, str]:
+        """Return mapping of values to their display labels."""
+        return {choice[0]: choice[1] for choice in cls.choices}
+
+    @classmethod
+    def is_valid(cls, value: str) -> bool:
+        """Check if a value is valid for this choice set."""
+        return value in cls.get_values()
+
+    @classmethod
+    def get_label(cls, value: str) -> Optional[str]:
+        """Get display label for a value."""
+        return cls.get_labels().get(value)
+
+    @classmethod
+    def exclude_default(cls) -> List[Tuple[str, str]]:
+        """Return choices without the DEFAULT option."""
+        return [(k, v) for k, v in cls.choices if k != ""]
+
+
 # Generic
-class FlatOrPercentChoices(models.TextChoices):
+class BooleanChoices(BaseChoices):
+    """Boolean choice options with an empty default.
+
+    Provides a three-state boolean (True/False/None) for form fields.
+    Includes utility method for converting string values to Python booleans.
+
+    Attributes:
+        DEFAULT (str): Empty string choice with "---" label
+        YES (str): "TRUE" value with "Yes" label
+        NO (str): "FALSE" value with "No" label
+
+    Example:
+        class Settings(models.Model):
+            is_active = models.CharField(
+                max_length=5,
+                choices=BooleanChoices.choices,
+                default=BooleanChoices.DEFAULT
+            )
+    """
+
+    YES = "TRUE", _("Yes")
+    NO = "FALSE", _("No")
+
+    @classmethod
+    def to_python(cls, value: str) -> Optional[bool]:
+        """Convert string value to Python boolean."""
+        if value == cls.YES:
+            return True
+        if value == cls.NO:
+            return False
+        return None
+
+
+class FlatOrPercentChoices(BaseChoices):
     """Flat or percent choices for rate calculations.
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         FLAT (str): Flat rate option
         PERCENT (str): Percentage rate option
     """
 
-    DEFAULT = "", _("---")
     FLAT = "FLAT", _("Flat")
     PERCENT = "PERCENT", _("Percent")
 
 
-class TimeFrequencyChoices(models.TextChoices):
+class TimeFrequencyChoices(BaseChoices):
     """Time frequency options for recurring events.
 
+    Provides standard time frequency options with utility methods for
+    calculating durations and intervals.
+
     Attributes:
-        DEFAULT (str): Empty string representing no selection
-        HOURLY (str): Hourly frequency
-        DAILY (str): Daily frequency
-        WEEKLY (str): Weekly frequency
-        MONTHLY (str): Monthly frequency
-        QUARTERLY (str): Quarterly frequency
-        ANNUALLY (str): Annually frequency
+        HOURLY (str): Hourly frequency option
+        DAILY (str): Daily frequency option
+        WEEKLY (str): Weekly frequency option
+        MONTHLY (str): Monthly frequency option
+        QUARTERLY (str): Quarterly frequency option
+        ANNUALLY (str): Annually frequency option
+
+    Example:
+        class Schedule(models.Model):
+            frequency = models.CharField(
+                max_length=20,
+                choices=TimeFrequencyChoices.choices,
+                default=TimeFrequencyChoices.DAILY
+            )
     """
 
-    DEFAULT = "", _("---")
     HOURLY = "HOURLY", _("Hourly")
     DAILY = "DAILY", _("Daily")
     WEEKLY = "WEEKLY", _("Weekly")
@@ -52,13 +189,61 @@ class TimeFrequencyChoices(models.TextChoices):
     QUARTERLY = "QUARTERLY", _("Quarterly")
     ANNUALLY = "ANNUALLY", _("Annually")
 
+    DURATION_MAPPING = {
+        HOURLY: timedelta(hours=1),
+        DAILY: timedelta(days=1),
+        WEEKLY: timedelta(weeks=1),
+        MONTHLY: timedelta(days=30),  # Approximate
+        QUARTERLY: timedelta(days=91),  # Approximate
+        ANNUALLY: timedelta(days=365),
+    }
+
+    @classmethod
+    def get_timedelta(cls, frequency: str) -> Optional[timedelta]:
+        """Get timedelta for a frequency value."""
+        return cls.DURATION_MAPPING.get(frequency)
+
+    @classmethod
+    def get_seconds(cls, frequency: str) -> Optional[int]:
+        """Get duration in seconds for a frequency."""
+        delta = cls.get_timedelta(frequency)
+        return int(delta.total_seconds()) if delta else None
+
+
+class TaskStatusChoices(BaseChoices):
+    """Task processing status options.
+
+    Represents different states in a task's lifecycle from creation to completion.
+
+    Attributes:
+        PENDING (str): Task is waiting to be processed
+        IN_PROGRESS (str): Task is currently being processed
+        COMPLETED (str): Task has been successfully completed
+        FAILED (str): Task has failed to complete
+    """
+
+    PENDING = "PENDING", _("Pending")
+    IN_PROGRESS = "IN_PROGRESS", _("In Progress")
+    COMPLETED = "COMPLETED", _("Completed")
+    FAILED = "FAILED", _("Failed")
+
+    # Add class methods for common validations
+    @classmethod
+    def is_terminal_state(cls, status):
+        """Check if the status is in a terminal state (completed or failed)."""
+        return status in {cls.COMPLETED, cls.FAILED}
+
+    @classmethod
+    def is_active_state(cls, status):
+        """Check if the status is in an active state (pending or in progress)."""
+        return status in {cls.PENDING, cls.IN_PROGRESS}
+
 
 # Person
-class PersonBloodChoices(models.TextChoices):
+class PersonBloodChoices(BaseChoices):
     """Blood type classification options.
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         A (str): Blood type A
         B (str): Blood type B
         AB (str): Blood type AB
@@ -66,7 +251,6 @@ class PersonBloodChoices(models.TextChoices):
         OTHERS (str): Other blood types
     """
 
-    DEFAULT = "", _("---")
     A = "A", _("A")
     B = "B", _("B")
     AB = "AB", _("AB")
@@ -74,7 +258,7 @@ class PersonBloodChoices(models.TextChoices):
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonEducationLevelChoices(models.TextChoices):
+class PersonEducationLevelChoices(BaseChoices):
     """Academic achievement level classifications.
 
     Represents different levels of academic achievement from high school through doctoral degrees.
@@ -83,7 +267,6 @@ class PersonEducationLevelChoices(models.TextChoices):
         https://study.com/different_degrees.html
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         HIGH_SCHOOL (str): High School diploma
         ASSOCIATE (str): Associate degree
         BACHELOR (str): Bachelor's degree
@@ -92,7 +275,6 @@ class PersonEducationLevelChoices(models.TextChoices):
         OTHERS (str): Other education levels
     """
 
-    DEFAULT = "", _("---")
     HIGH_SCHOOL = "HIGH_SCHOOL", _("High School")
     ASSOCIATE = "ASSOCIATE", _("Associate Degree")
     BACHELOR = "BACHELOR", _("Bachelor's Degree")
@@ -100,15 +282,28 @@ class PersonEducationLevelChoices(models.TextChoices):
     DOCTORAL = "DOCTORAL", _("Doctoral Degree")
     OTHERS = "OTHERS", _("Others")
 
+    # Add metadata as class attributes
+    EDUCATION_YEARS = {
+        HIGH_SCHOOL: 12,
+        ASSOCIATE: 14,
+        BACHELOR: 16,
+        MASTER: 18,
+        DOCTORAL: 20,
+    }
 
-class PersonEyeColorChoices(models.TextChoices):
+    @classmethod
+    def get_education_years(cls, level: str) -> int:
+        """Return typical years of education for given level."""
+        return cls.EDUCATION_YEARS.get(level, 0)
+
+
+class PersonEyeColorChoices(BaseChoices):
     """Eye color classification options.
 
     References:
         https://en.wikipedia.org/wiki/Eye_color#Eye_color_chart_(Martin_scale)
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         AMBER (str): Amber colored eyes
         BLUE (str): Blue colored eyes
         BROWN (str): Brown colored eyes
@@ -119,7 +314,6 @@ class PersonEyeColorChoices(models.TextChoices):
         OTHERS (str): Other eye colors
     """
 
-    DEFAULT = "", _("---")
     AMBER = "AMBER", _("Amber")
     BLUE = "BLUE", _("Blue")
     BROWN = "BROWN", _("Brown")
@@ -130,30 +324,27 @@ class PersonEyeColorChoices(models.TextChoices):
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonGenderChoices(models.TextChoices):
+class PersonGenderChoices(BaseChoices):
     """Gender classification options.
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         FEMALE (str): Female gender
         MALE (str): Male gender
         OTHERS (str): Other gender identifications
     """
 
-    DEFAULT = "", _("---")
     FEMALE = "FEMALE", _("Female")
     MALE = "MALE", _("Male")
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonRaceChoices(models.TextChoices):
+class PersonRaceChoices(BaseChoices):
     """Racial and ethnic classification options.
 
     References:
         https://grants.nih.gov/grants/guide/notice-files/not-od-15-089.html
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         ASIAN (str): Asian racial identification
         BLACK (str): Black or African American racial identification
         HISPANIC (str): Hispanic or Latino ethnic identification
@@ -163,7 +354,6 @@ class PersonRaceChoices(models.TextChoices):
         OTHERS (str): Other racial or ethnic identifications
     """
 
-    DEFAULT = "", _("---")
     ASIAN = "ASIAN", _("Asian")
     BLACK = "BLACK", _("Black Or African American")
     HISPANIC = "HISPANIC", _("Hispanic Or Latino")
@@ -174,11 +364,10 @@ class PersonRaceChoices(models.TextChoices):
 
 
 # Payment / Transaction
-class PaymentMethodTypeChoices(models.TextChoices):
+class PaymentMethodTypeChoices(BaseChoices):
     """Available payment method options.
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         CREDIT_CARD (str): Credit card payment method
         DEBIT_CARD (str): Debit card payment method
         ELECTRONIC_BANK_TRANSFER (str): Bank transfer payment method
@@ -187,20 +376,41 @@ class PaymentMethodTypeChoices(models.TextChoices):
         GOOGLE_PAY (str): Google Pay payment method
     """
 
-    DEFAULT = "", _("---")
     CREDIT_CARD = "CREDIT_CARD", _("Credit Card")
     DEBIT_CARD = "DEBIT_CARD", _("Debit Card")
     ELECTRONIC_BANK_TRANSFER = "BANK_TRANSFER", _("Bank Transfer")
-    PAYPAL = "PAYPAL", _("Paypal")
+    PAYPAL = "PAYPAL", _("PayPal")
     APPLE_PAY = "APPLE_PAY", _("Apple Pay")
     GOOGLE_PAY = "GOOGLE_PAY", _("Google Pay")
 
+    REQUIRES_CVV = {CREDIT_CARD, DEBIT_CARD}
+    REQUIRES_3DS = {CREDIT_CARD, DEBIT_CARD}
 
-class TransactionGatewayChoices(models.TextChoices):
+    @classmethod
+    def requires_cvv(cls, method: str) -> bool:
+        """Check if payment method requires CVV."""
+        return method in cls.REQUIRES_CVV
+
+    @classmethod
+    def requires_3ds(cls, method: str) -> bool:
+        """Check if payment method requires 3D Secure."""
+        return method in cls.REQUIRES_3DS
+
+    @classmethod
+    def card_methods(cls) -> set:
+        """Return all card-based payment methods."""
+        return {cls.CREDIT_CARD, cls.DEBIT_CARD}
+
+    @classmethod
+    def digital_wallet_methods(cls) -> set:
+        """Return all digital wallet payment methods."""
+        return {cls.PAYPAL, cls.APPLE_PAY, cls.GOOGLE_PAY}
+
+
+class TransactionGatewayChoices(BaseChoices):
     """Supported payment processing gateways.
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         ADYEN (str): Adyen payment gateway
         ALIPAY (str): Alipay payment gateway
         AMAZON (str): Amazon payment gateway
@@ -215,7 +425,6 @@ class TransactionGatewayChoices(models.TextChoices):
         WORLDPAY (str): Worldpay payment gateway
     """
 
-    DEFAULT = "", _("---")
     ADYEN = "ADYEN", _("Adyen")
     ALIPAY = "ALIPAY", _("Alipay")
     AMAZON = "AMAZON", _("Amazon")
@@ -230,14 +439,13 @@ class TransactionGatewayChoices(models.TextChoices):
     WORLDPAY = "WORLDPAY", _("Worldpay")
 
 
-class TransactionStateChoices(models.TextChoices):
+class TransactionStateChoices(BaseChoices):
     """Transaction processing state options.
 
     References:
         https://stripe.com/docs/payments/intents#intent-statuses
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         REQUIRES_PAYMENT_METHOD (str): Payment method needs to be provided
         REQUIRES_CONFIRMATION (str): Transaction requires confirmation
         REQUIRES_ACTION (str): Additional action required
@@ -246,7 +454,6 @@ class TransactionStateChoices(models.TextChoices):
         SUCCESS (str): Transaction completed successfully
     """
 
-    DEFAULT = "", _("---")
     REQUIRES_PAYMENT_METHOD = "REQUIRES_PAYMENT_METHOD", _("Requires Payment Method")
     REQUIRES_CONFIRMATION = "REQUIRES_CONFIRMATION", _("Requires Confirmation")
     REQUIRES_ACTION = "REQUIRES_ACTION", _("Requires Action")
@@ -254,12 +461,29 @@ class TransactionStateChoices(models.TextChoices):
     CANCEL = "CANCEL", _("Cancel")
     SUCCESS = "SUCCESS", _("Success")
 
+    @classmethod
+    def can_transition_to(cls, current_state: str, new_state: str) -> bool:
+        """Validate if a state transition is allowed."""
+        VALID_TRANSITIONS = {
+            cls.DEFAULT: {cls.REQUIRES_PAYMENT_METHOD},
+            cls.REQUIRES_PAYMENT_METHOD: {cls.REQUIRES_CONFIRMATION, cls.CANCEL},
+            cls.REQUIRES_CONFIRMATION: {
+                cls.REQUIRES_ACTION,
+                cls.PROCESSING,
+                cls.CANCEL,
+            },
+            cls.REQUIRES_ACTION: {cls.PROCESSING, cls.CANCEL},
+            cls.PROCESSING: {cls.SUCCESS, cls.CANCEL},
+            cls.SUCCESS: set(),  # Terminal state
+            cls.CANCEL: set(),  # Terminal state
+        }
+        return new_state in VALID_TRANSITIONS.get(current_state, set())
 
-class TransactionTypeChoices(models.TextChoices):
+
+class TransactionTypeChoices(BaseChoices):
     """Transaction classification options.
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         PAYMENT (str): Standard payment transaction
         REFUND (str): Refund transaction
         ADJUSTMENT (str): Adjustment transaction
@@ -267,19 +491,30 @@ class TransactionTypeChoices(models.TextChoices):
         PRORATION (str): Proration transaction
     """
 
-    DEFAULT = "", _("---")
     PAYMENT = "PAYMENT", _("Payment")
     REFUND = "REFUND", _("Refund")
     ADJUSTMENT = "ADJUSTMENT", _("Adjustment")
     COUPON = "COUPON", _("Coupon")
     PRORATION = "PRORATION", _("Proration")
 
+    AFFECTS_BALANCE = {PAYMENT, REFUND, ADJUSTMENT}
+    REQUIRES_PROCESSING = {PAYMENT, REFUND}
 
-class TransactionEventTypeChoices(models.TextChoices):
+    @classmethod
+    def affects_balance(cls, trans_type: str) -> bool:
+        """Check if transaction type affects account balance."""
+        return trans_type in cls.AFFECTS_BALANCE
+
+    @classmethod
+    def requires_processing(cls, trans_type: str) -> bool:
+        """Check if transaction type requires payment processing."""
+        return trans_type in cls.REQUIRES_PROCESSING
+
+
+class TransactionEventTypeChoices(BaseChoices):
     """Transaction lifecycle event types.
 
     Attributes:
-        DEFAULT (str): Empty string representing no selection
         CREATED (str): Transaction has been created
         AUTHORIZED (str): Transaction has been authorized
         CAPTURED (str): Transaction has been captured
@@ -287,7 +522,6 @@ class TransactionEventTypeChoices(models.TextChoices):
         FAILED (str): Transaction has failed
     """
 
-    DEFAULT = "", _("---")
     CREATED = "CREATED", _("Created")
     AUTHORIZED = "AUTHORIZED", _("Authorized")
     CAPTURED = "CAPTURED", _("Captured")
