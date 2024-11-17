@@ -484,9 +484,115 @@
 
     <div class="doc doc-contents ">
 
-        <p>When User object is created, create Profile object using the custom Profile model
-specified in settings.PROFILE_MODEL or fallback to default Profile model</p>
+        <p>Creates or updates a user profile when a User object is saved.</p>
+<p>This signal handler automatically creates a Profile object for newly created
+User instances, or updates existing Profile objects for existing users.
+The Profile model can be customized via settings.PROFILE_MODEL.</p>
 
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sender</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The model class that sent the signal (User).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>instance</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The actual instance of the User model being saved.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>created</code>
+            </td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if a new record was created, False for updates.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>**kwargs</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Additional keyword arguments passed by the signal.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>None</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>The Profile model is determined by settings.PROFILE_MODEL, defaulting to
+'django_util.Profile' if not specified.</p>
+</details>
             <details class="quote">
               <summary>Source code in <code>django_util/signals.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
@@ -502,11 +608,41 @@ specified in settings.PROFILE_MODEL or fallback to default Profile model</p>
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">User</span><span class="p">)</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">User</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">create_user_profile</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    When User object is created, create Profile object using the custom Profile model</span>
-<span class="sd">    specified in settings.PROFILE_MODEL or fallback to default Profile model</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates or updates a user profile when a User object is saved.</span>
+
+<span class="sd">    This signal handler automatically creates a Profile object for newly created</span>
+<span class="sd">    User instances, or updates existing Profile objects for existing users.</span>
+<span class="sd">    The Profile model can be customized via settings.PROFILE_MODEL.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sender: The model class that sent the signal (User).</span>
+<span class="sd">        instance: The actual instance of the User model being saved.</span>
+<span class="sd">        created (bool): True if a new record was created, False for updates.</span>
+<span class="sd">        **kwargs: Additional keyword arguments passed by the signal.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The Profile model is determined by settings.PROFILE_MODEL, defaulting to</span>
+<span class="sd">        &#39;django_util.Profile&#39; if not specified.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Get the Profile model from settings or use default</span>
     <span class="n">profile_model_path</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;PROFILE_MODEL&quot;</span><span class="p">,</span> <span class="s2">&quot;django_util.Profile&quot;</span><span class="p">)</span>

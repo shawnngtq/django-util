@@ -350,6 +350,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#django_util.utility.mark_safe_lazy" class="md-nav__link">
+    <span class="md-ellipsis">
+      mark_safe_lazy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django_util.utility.is_object_creator" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_object_creator
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -413,6 +431,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#django_util.utility.mark_safe_lazy" class="md-nav__link">
+    <span class="md-ellipsis">
+      mark_safe_lazy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django_util.utility.is_object_creator" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_object_creator
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -453,7 +489,144 @@
 
 
 
+<div class="doc doc-object doc-attribute">
 
+
+
+<h2 id="django_util.utility.mark_safe_lazy" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">mark_safe_lazy</span> <span class="o">=</span> <span class="n">lazy</span><span class="p">(</span><span class="n">mark_safe</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Deprecated: A lazy wrapper for mark_safe function.</p>
+<p>This function is deprecated and obsolete as of Django 4.1. It was previously used
+to create lazy versions of marked-safe strings, typically for form help text with HTML.</p>
+
+
+<details class="see" open>
+  <summary>See</summary>
+  <p>https://docs.djangoproject.com/en/4.1/releases/4.1/#utilities</p>
+</details>    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="django_util.utility.is_object_creator" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">is_object_creator</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">profile</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Check if the given profile is the creator of the object.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>object</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The object to check ownership of.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>profile</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The profile to verify as the creator.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bool</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if the profile is the creator of the object, False otherwise.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>django_util/utility.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">is_object_creator</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the given profile is the creator of the object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        object: The object to check ownership of.</span>
+<span class="sd">        profile: The profile to verify as the creator.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the profile is the creator of the object, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="n">profile</span> <span class="o">==</span> <span class="n">profile</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
 
 
 

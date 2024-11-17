@@ -368,6 +368,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#django_util.validators.is_numeric" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_numeric
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -406,6 +415,15 @@
   <a href="#django_util.validators" class="md-nav__link">
     <span class="md-ellipsis">
       validators
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django_util.validators.is_numeric" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_numeric
     </span>
   </a>
   
@@ -450,6 +468,70 @@
 
 
 
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="django_util.validators.is_numeric" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">is_numeric</span> <span class="o">=</span> <span class="n">RegexValidator</span><span class="p">(</span><span class="s1">&#39;^[0-9]*$&#39;</span><span class="p">,</span> <span class="s1">&#39;Only numbers, leading zeros are ok.&#39;</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>RegexValidator: Validates that a string contains only numeric characters.</p>
+<p>This validator ensures that the input string consists solely of digits (0-9).
+Leading zeros are permitted in the input.</p>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <p>Valid inputs: "123", "001", "0", ""
+Invalid inputs: "12a", "-1", "1.0", "1,000"</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="django_util.validators.is_numeric.regex">regex</span></code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The regular expression pattern "^[0-9]*$"</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="django_util.validators.is_numeric.message">message</span></code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The error message displayed when validation fails</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+    </div>
+
+</div>
 
 
 

@@ -492,6 +492,90 @@
 <a id="django_util.admin"></a>
     <div class="doc doc-contents first">
 
+        <p>Django admin utility module for field management and filtering.</p>
+<p>This module provides utility functions and constants for configuring Django admin views,
+particularly focused on field filtering and display configurations.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="django_util.admin.related_field_set">related_field_set</span></code></td>
+            <td>
+                  <code><span title="typing.Set">Set</span>[<span title="typing.Type">Type</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Set of Django field types that represent relations.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="django_util.admin.complex_field_set">complex_field_set</span></code></td>
+            <td>
+                  <code><span title="typing.Set">Set</span>[<span title="typing.Type">Type</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Set of Django field types considered complex.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="django_util.admin.list_display_user_admin">list_display_user_admin</span></code></td>
+            <td>
+                  <code><span title="typing.List">List</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Default display fields for User admin interface.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="django_util.admin.list_display_exclude">list_display_exclude</span></code></td>
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="typing.Type">Type</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Field types to exclude from admin list display.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="django_util.admin.list_filter_base">list_filter_base</span></code></td>
+            <td>
+                  <code><span title="typing.List">List</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Base filter fields for standard admin views.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="django_util.admin.list_filter_base_public_contribute">list_filter_base_public_contribute</span></code></td>
+            <td>
+                  <code><span title="typing.List">List</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Extended filter fields including verification status.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
 
 
 
@@ -520,7 +604,7 @@
 
     <div class="doc doc-contents ">
 
-        <p>Get field names from a Django model based on field types.</p>
+        <p>Gets field names from a Django model based on specified field types.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -543,7 +627,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Django model instance or class</p>
+                <p>Django model instance or class to inspect.</p>
               </div>
             </td>
             <td>
@@ -559,7 +643,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>List of field types to filter by</p>
+                <p>List of Django field types to filter by.</p>
               </div>
             </td>
             <td>
@@ -575,7 +659,8 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If True, exclude the specified field types; if False, include only these types</p>
+                <p>Whether to exclude or include the specified field types.
+Defaults to True.</p>
               </div>
             </td>
             <td>
@@ -601,17 +686,29 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>List of field names matching the criteria</p>
+                <p>List[str]: List of field names that match the filtering criteria.</p>
               </div>
             </td>
           </tr>
       </tbody>
     </table>
 
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>fields = django_meta_get_fields(MyModel, [ManyToManyField], exclude=True)
+print(fields)
+['id', 'name', 'description']</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
             <details class="quote">
               <summary>Source code in <code>django_util/admin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">43</span>
-<span class="normal">44</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
 <span class="normal">45</span>
 <span class="normal">46</span>
 <span class="normal">47</span>
@@ -630,21 +727,32 @@
 <span class="normal">60</span>
 <span class="normal">61</span>
 <span class="normal">62</span>
-<span class="normal">63</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">django_meta_get_fields</span><span class="p">(</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">django_meta_get_fields</span><span class="p">(</span>
     <span class="n">django_object</span><span class="p">:</span> <span class="s2">&quot;models.Model&quot;</span><span class="p">,</span>
     <span class="n">field_types</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="s2">&quot;models.Field&quot;</span><span class="p">]],</span>
     <span class="n">exclude</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get field names from a Django model based on field types.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets field names from a Django model based on specified field types.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        django_object: Django model instance or class</span>
-<span class="sd">        field_types: List of field types to filter by</span>
-<span class="sd">        exclude: If True, exclude the specified field types; if False, include only these types</span>
+<span class="sd">        django_object (models.Model): Django model instance or class to inspect.</span>
+<span class="sd">        field_types (List[Type[models.Field]]): List of Django field types to filter by.</span>
+<span class="sd">        exclude (bool, optional): Whether to exclude or include the specified field types.</span>
+<span class="sd">            Defaults to True.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        List of field names matching the criteria</span>
+<span class="sd">        List[str]: List of field names that match the filtering criteria.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; fields = django_meta_get_fields(MyModel, [ManyToManyField], exclude=True)</span>
+<span class="sd">        &gt;&gt;&gt; print(fields)</span>
+<span class="sd">        [&#39;id&#39;, &#39;name&#39;, &#39;description&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span>
         <span class="n">field</span><span class="o">.</span><span class="n">name</span>
@@ -668,20 +776,109 @@
 
     <div class="doc doc-contents ">
 
-        <p>Wrapper for django_meta_get_fields with exclude=True</p>
+        <p>Convenience wrapper for django_meta_get_fields that excludes specified field types.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>django_object</code>
+            </td>
+            <td>
+                  <code><span title="typing.Any">Any</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Django model instance or class to inspect.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>to_exclude</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="typing.Type">Type</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of field types to exclude.
+Defaults to list_display_exclude.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="django_util.admin.list_display_exclude">list_display_exclude</span></code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.List">List</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List[str]: List of field names excluding the specified field types.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
             <details class="quote">
               <summary>Source code in <code>django_util/admin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">django_meta_get_fields_exclude</span><span class="p">(</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">django_meta_get_fields_exclude</span><span class="p">(</span>
     <span class="n">django_object</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="n">to_exclude</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_display_exclude</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrapper for django_meta_get_fields with exclude=True&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience wrapper for django_meta_get_fields that excludes specified field types.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        django_object (Any): Django model instance or class to inspect.</span>
+<span class="sd">        to_exclude (List[Type], optional): List of field types to exclude.</span>
+<span class="sd">            Defaults to list_display_exclude.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[str]: List of field names excluding the specified field types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">django_meta_get_fields</span><span class="p">(</span><span class="n">django_object</span><span class="p">,</span> <span class="n">to_exclude</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -700,20 +897,109 @@
 
     <div class="doc doc-contents ">
 
-        <p>Wrapper for django_meta_get_fields with exclude=False</p>
+        <p>Convenience wrapper for django_meta_get_fields that includes only specified field types.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>django_object</code>
+            </td>
+            <td>
+                  <code><span title="typing.Any">Any</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Django model instance or class to inspect.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>to_include</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="typing.Type">Type</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of field types to include.
+Defaults to [ManyToManyField].</p>
+              </div>
+            </td>
+            <td>
+                  <code>[<span title="django.db.models.ManyToManyField">ManyToManyField</span>]</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.List">List</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List[str]: List of field names matching the specified field types.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
             <details class="quote">
               <summary>Source code in <code>django_util/admin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">django_meta_get_fields_include</span><span class="p">(</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">django_meta_get_fields_include</span><span class="p">(</span>
     <span class="n">django_object</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="n">to_include</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">ManyToManyField</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrapper for django_meta_get_fields with exclude=False&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience wrapper for django_meta_get_fields that includes only specified field types.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        django_object (Any): Django model instance or class to inspect.</span>
+<span class="sd">        to_include (List[Type], optional): List of field types to include.</span>
+<span class="sd">            Defaults to [ManyToManyField].</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[str]: List of field names matching the specified field types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">django_meta_get_fields</span><span class="p">(</span><span class="n">django_object</span><span class="p">,</span> <span class="n">to_include</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
