@@ -18,8 +18,12 @@ TRUE_FALSE_CHOICES = [
 
 # Generic
 class FlatOrPercentChoices(models.TextChoices):
-    """
-    Flat or percent enumeration
+    """Flat or percent choices for rate calculations.
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        FLAT (str): Flat rate option
+        PERCENT (str): Percentage rate option
     """
 
     DEFAULT = "", _("---")
@@ -28,8 +32,16 @@ class FlatOrPercentChoices(models.TextChoices):
 
 
 class TimeFrequencyChoices(models.TextChoices):
-    """
-    Time frequency enumeration
+    """Time frequency options for recurring events.
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        HOURLY (str): Hourly frequency
+        DAILY (str): Daily frequency
+        WEEKLY (str): Weekly frequency
+        MONTHLY (str): Monthly frequency
+        QUARTERLY (str): Quarterly frequency
+        ANNUALLY (str): Annually frequency
     """
 
     DEFAULT = "", _("---")
@@ -43,8 +55,15 @@ class TimeFrequencyChoices(models.TextChoices):
 
 # Person
 class PersonBloodChoices(models.TextChoices):
-    """
-    Person blood enumeration
+    """Blood type classification options.
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        A (str): Blood type A
+        B (str): Blood type B
+        AB (str): Blood type AB
+        O (str): Blood type O
+        OTHERS (str): Other blood types
     """
 
     DEFAULT = "", _("---")
@@ -56,12 +75,21 @@ class PersonBloodChoices(models.TextChoices):
 
 
 class PersonEducationLevelChoices(models.TextChoices):
-    """
-    Person education level enumeration
+    """Academic achievement level classifications.
 
-    Reference
-    ---------
-    - https://study.com/different_degrees.html
+    Represents different levels of academic achievement from high school through doctoral degrees.
+
+    References:
+        https://study.com/different_degrees.html
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        HIGH_SCHOOL (str): High School diploma
+        ASSOCIATE (str): Associate degree
+        BACHELOR (str): Bachelor's degree
+        MASTER (str): Master's degree
+        DOCTORAL (str): Doctoral degree
+        OTHERS (str): Other education levels
     """
 
     DEFAULT = "", _("---")
@@ -74,12 +102,21 @@ class PersonEducationLevelChoices(models.TextChoices):
 
 
 class PersonEyeColorChoices(models.TextChoices):
-    """
-    Person eye color enumeration
+    """Eye color classification options.
 
-    Reference
-    ---------
-    - https://en.wikipedia.org/wiki/Eye_color#Eye_color_chart_(Martin_scale)
+    References:
+        https://en.wikipedia.org/wiki/Eye_color#Eye_color_chart_(Martin_scale)
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        AMBER (str): Amber colored eyes
+        BLUE (str): Blue colored eyes
+        BROWN (str): Brown colored eyes
+        GREEN (str): Green colored eyes
+        GREY (str): Grey colored eyes
+        HAZEL (str): Hazel colored eyes
+        RED (str): Red colored eyes
+        OTHERS (str): Other eye colors
     """
 
     DEFAULT = "", _("---")
@@ -94,8 +131,13 @@ class PersonEyeColorChoices(models.TextChoices):
 
 
 class PersonGenderChoices(models.TextChoices):
-    """
-    Person gender enumeration
+    """Gender classification options.
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        FEMALE (str): Female gender
+        MALE (str): Male gender
+        OTHERS (str): Other gender identifications
     """
 
     DEFAULT = "", _("---")
@@ -105,12 +147,20 @@ class PersonGenderChoices(models.TextChoices):
 
 
 class PersonRaceChoices(models.TextChoices):
-    """
-    Person race enumeration
+    """Racial and ethnic classification options.
 
-    Reference
-    ---------
-    - https://grants.nih.gov/grants/guide/notice-files/not-od-15-089.html
+    References:
+        https://grants.nih.gov/grants/guide/notice-files/not-od-15-089.html
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        ASIAN (str): Asian racial identification
+        BLACK (str): Black or African American racial identification
+        HISPANIC (str): Hispanic or Latino ethnic identification
+        INDIAN (str): American Indian or Alaska Native racial identification
+        ISLANDER (str): Native Hawaiian or Other Pacific Islander racial identification
+        WHITE (str): White racial identification
+        OTHERS (str): Other racial or ethnic identifications
     """
 
     DEFAULT = "", _("---")
@@ -125,8 +175,16 @@ class PersonRaceChoices(models.TextChoices):
 
 # Payment / Transaction
 class PaymentMethodTypeChoices(models.TextChoices):
-    """
-    Payment method type enumeration
+    """Available payment method options.
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        CREDIT_CARD (str): Credit card payment method
+        DEBIT_CARD (str): Debit card payment method
+        ELECTRONIC_BANK_TRANSFER (str): Bank transfer payment method
+        PAYPAL (str): PayPal payment method
+        APPLE_PAY (str): Apple Pay payment method
+        GOOGLE_PAY (str): Google Pay payment method
     """
 
     DEFAULT = "", _("---")
@@ -139,8 +197,22 @@ class PaymentMethodTypeChoices(models.TextChoices):
 
 
 class TransactionGatewayChoices(models.TextChoices):
-    """
-    Transaction gateway enumeration
+    """Supported payment processing gateways.
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        ADYEN (str): Adyen payment gateway
+        ALIPAY (str): Alipay payment gateway
+        AMAZON (str): Amazon payment gateway
+        AUTHORIZE (str): Authorize.net payment gateway
+        BRAINTREE (str): Braintree payment gateway
+        CYBERSOURCE (str): Cybersource payment gateway
+        INGENICO (str): Ingenico payment gateway
+        PAYPAL (str): PayPal payment gateway
+        SQUARE (str): Square payment gateway
+        STRIPE (str): Stripe payment gateway
+        WEPAY (str): WePay payment gateway
+        WORLDPAY (str): Worldpay payment gateway
     """
 
     DEFAULT = "", _("---")
@@ -159,12 +231,19 @@ class TransactionGatewayChoices(models.TextChoices):
 
 
 class TransactionStateChoices(models.TextChoices):
-    """
-    Transaction state enumeration
+    """Transaction processing state options.
 
-    Reference
-    ---------
-    - https://stripe.com/docs/payments/intents#intent-statuses
+    References:
+        https://stripe.com/docs/payments/intents#intent-statuses
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        REQUIRES_PAYMENT_METHOD (str): Payment method needs to be provided
+        REQUIRES_CONFIRMATION (str): Transaction requires confirmation
+        REQUIRES_ACTION (str): Additional action required
+        PROCESSING (str): Transaction is being processed
+        CANCEL (str): Transaction has been cancelled
+        SUCCESS (str): Transaction completed successfully
     """
 
     DEFAULT = "", _("---")
@@ -177,8 +256,15 @@ class TransactionStateChoices(models.TextChoices):
 
 
 class TransactionTypeChoices(models.TextChoices):
-    """
-    Transaction type enumeration
+    """Transaction classification options.
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        PAYMENT (str): Standard payment transaction
+        REFUND (str): Refund transaction
+        ADJUSTMENT (str): Adjustment transaction
+        COUPON (str): Coupon application transaction
+        PRORATION (str): Proration transaction
     """
 
     DEFAULT = "", _("---")
@@ -190,8 +276,15 @@ class TransactionTypeChoices(models.TextChoices):
 
 
 class TransactionEventTypeChoices(models.TextChoices):
-    """
-    Transaction event type enumeration
+    """Transaction lifecycle event types.
+
+    Attributes:
+        DEFAULT (str): Empty string representing no selection
+        CREATED (str): Transaction has been created
+        AUTHORIZED (str): Transaction has been authorized
+        CAPTURED (str): Transaction has been captured
+        REFUNDED (str): Transaction has been refunded
+        FAILED (str): Transaction has failed
     """
 
     DEFAULT = "", _("---")

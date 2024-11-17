@@ -24,12 +24,15 @@ from django_util.fields import UpperTextField
 
 # abstract
 class Profile(models.Model):
-    """
-    Profile model extend Django User model
+    """Abstract profile model that extends Django User model.
 
-    Reference
-    ---------
-    - https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
+    Provides one-to-one relationship with Django's built-in User model.
+
+    Attributes:
+        user (User): One-to-one relationship to Django User model.
+
+    References:
+        https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
     """
 
     user = models.OneToOneField(
@@ -42,22 +45,22 @@ class Profile(models.Model):
 
 
 class Base(models.Model):
-    """
-    The ideal abstract base model
+    """Abstract base model with metadata and user tracking.
 
-    Reference
-    ---------
-    - https://docs.djangoproject.com/en/3.0/topics/db/models/#abstract-base-classes
-    - https://stackoverflow.com/a/16838663
+    Provides created/updated timestamps, user tracking, notes and verification.
 
-    Metadata
+    Attributes:
+        created_at (datetime): Timestamp of creation
+        updated_at (datetime): Timestamp of last update
+        created_by (User): User who created the record
+        updated_by (User): User who last updated the record
+        note (str): Upper case text field for notes
+        is_admin_verified (bool): Whether verified by admin
 
-    - https://dataedo.com/kb/data-glossary/what-is-metadata
-
-    User tracker
-
-    - https://docs.djangoproject.com/en/3.1/topics/class-based-views/generic-editing/#models-and-request-user
-    - https://stackoverflow.com/questions/5611410/related-name-argument-not-working-as-expected-in-django-model
+    References:
+        - https://docs.djangoproject.com/en/3.0/topics/db/models/#abstract-base-classes
+        - https://dataedo.com/kb/data-glossary/what-is-metadata
+        - https://docs.djangoproject.com/en/3.1/topics/class-based-views/generic-editing/#models-and-request-user
     """
 
     created_at = models.DateTimeField(
@@ -152,8 +155,13 @@ class Base(models.Model):
 
 
 class BasePublicContribute(Base):
-    """
-    Enhanced abstract base model, use if data can be edited by public
+    """Enhanced base model for publicly editable data.
+
+    Extends Base model with verification and visibility controls.
+
+    Attributes:
+        is_verified (bool): Whether the entry has been verified
+        is_hidden (bool): Whether the entry should be hidden from public view
     """
 
     is_verified = models.BooleanField(
@@ -177,8 +185,15 @@ class BasePublicContribute(Base):
 
 
 class EmailHttpRequest(models.Model):
-    """
-    Abstract model that stores email and HttpRequest fields
+    """Abstract model for storing email and HTTP request data.
+
+    Attributes:
+        email (str): Email address with database index
+        campaign (str): Upper case campaign identifier
+        http_referrer (str): HTTP referrer URL
+        http_user_agent (str): User agent string
+        remote_addr (str): IP address of requester
+        remote_host (str): Hostname of requester
     """
 
     email = models.EmailField(
@@ -210,12 +225,31 @@ class EmailHttpRequest(models.Model):
 
 
 class Person(models.Model):
-    """
-    Abstract Person model
+    """Abstract model for storing person information.
 
-    Reference
-    ---------
-    - https://schema.org/Person
+    Stores comprehensive personal information including names, physical characteristics,
+    and biographical data.
+
+    Attributes:
+        uuid (UUID): Unique identifier
+        english_first_name (str): First name in English
+        english_middle_name (str): Middle name in English
+        english_last_name (str): Last name in English
+        native_first_name (str): First name in native language
+        native_middle_name (str): Middle name in native language
+        native_last_name (str): Last name in native language
+        alias (list): List of alternative names
+        description (str): General description
+        birth_date (datetime): Date of birth
+        death_date (datetime): Date of death
+        blood_type (str): Blood type
+        eye_color (str): Eye color
+        gender (str): Gender identity
+        race (str): Racial identity
+        height (int): Height in units
+
+    References:
+        https://schema.org/Person
     """
 
     uuid = models.UUIDField(
@@ -299,12 +333,37 @@ class Person(models.Model):
 
 
 class FullCalendarEventParseV6(models.Model):
-    """
-    FullCalendar Event
+    """Abstract model for FullCalendar v6 event data.
 
-    Reference
-    ---------
-    - https://fullcalendar.io/docs/v6/event-parsing
+    Stores all fields needed for FullCalendar event parsing and display.
+
+    Attributes:
+        group_id (str): Event group identifier
+        all_day (bool): Whether event is all-day
+        start (datetime): Event start time
+        end (datetime): Event end time
+        days_of_week (list): Days when event repeats
+        start_time (time): Start time for recurring events
+        end_time (time): End time for recurring events
+        start_recur (datetime): Recurrence start date
+        end_recur (datetime): Recurrence end date
+        title (str): Event title
+        url (str): Associated URL
+        interactive (bool): Whether event is interactive
+        class_name (list): CSS classes to apply
+        editable (bool): Whether event is editable
+        start_editable (bool): Whether start time is editable
+        duration_editable (bool): Whether duration is editable
+        resource_editable (bool): Whether resource is editable
+        resource_id (str): Associated resource ID
+        resource_ids (list): Multiple associated resource IDs
+        display (str): Display mode
+        overlap (bool): Whether event can overlap
+        constraint (bool): Event constraints
+        color (bool): Event color
+
+    References:
+        https://fullcalendar.io/docs/v6/event-parsing
     """
 
     group_id = models.TextField(
@@ -408,12 +467,19 @@ class FullCalendarEventParseV6(models.Model):
 
 
 class WiseWebhook(models.Model):
-    """
-    Wise Webhook
+    """Abstract model for Wise webhook data.
 
-    Reference
-    ---------
-    - https://docs.wise.com/api-docs/api-reference/webhook
+    Stores webhook payload data from Wise payment service.
+
+    Attributes:
+        data (dict): Webhook payload data
+        subscription_id (str): Subscription identifier
+        event_type (str): Type of webhook event
+        schema_version (str): Version of webhook schema
+        sent_at (datetime): When webhook was sent
+
+    References:
+        https://docs.wise.com/api-docs/api-reference/webhook
     """
 
     data = models.JSONField(
@@ -442,14 +508,21 @@ class WiseWebhook(models.Model):
 
 
 class Transaction(models.Model):
-    """
-    Records a monetary exchange related to a subscription (e.g., payment, refund). The transactions table records monetary exchanges related to subscriptions.
+    """Abstract model for monetary transactions.
 
-    Reference
-    ---------
-    Transaction Amount encompasses the total monetary value of a transaction. Includes the base price of the item(s), taxes, shipping fees, any additional charges, and potentially discounts or credits applied. Is the final figure paid or received.
+    Records monetary exchanges related to subscriptions including payments and refunds.
 
-    Transaction Price often refers more specifically to the base price of the item or service being exchanged. Excludes taxes, fees, and other charges. Can be considered the core value of the transaction.
+    Attributes:
+        amount (Decimal): Total monetary value including taxes, fees etc
+        currency (str): 3-letter currency code
+        choice_type (str): Type of transaction
+        data (dict): Additional transaction data
+        state (str): Current transaction state
+        transaction_date (datetime): When transaction occurred
+
+    Notes:
+        Transaction Amount includes total value with all fees and adjustments.
+        Transaction Price refers to base price before additional charges.
     """
 
     amount = models.DecimalField(
@@ -490,8 +563,14 @@ class Transaction(models.Model):
 
 
 class TransactionEvent(models.Model):
-    """
-    Captures specific actions or changes within a transaction's lifecycle. The transaction_event table provides granular details about the transaction's lifecycle.
+    """Abstract model for transaction lifecycle events.
+
+    Records specific actions or state changes within a transaction's lifecycle.
+
+    Attributes:
+        choice_type (str): Type of event
+        description (str): Event description
+        data (dict): Additional event data
     """
 
     choice_type = UpperTextField(
@@ -516,8 +595,11 @@ class TransactionEvent(models.Model):
 
 
 class PaymentMethod(models.Model):
-    """
-    Abstract payment model
+    """Abstract model for payment methods.
+
+    Attributes:
+        choice_type (str): Type of payment method
+        billing_address (str): Associated billing address
     """
 
     choice_type = UpperTextField(
@@ -538,8 +620,14 @@ class PaymentMethod(models.Model):
 
 
 class CardPayment(PaymentMethod):
-    """
-    Card payment inherit PayMethod abstract model
+    """Abstract model for card payment methods.
+
+    Extends PaymentMethod with card-specific fields.
+
+    Attributes:
+        card_number (str): Card number
+        card_expiry (datetime): Card expiration date
+        card_cvv (str): Card security code
     """
 
     card_number = models.TextField(
@@ -560,8 +648,14 @@ class CardPayment(PaymentMethod):
 
 
 class Coupon(models.Model):
-    """
-    Coupon discount
+    """Abstract model for discount coupons.
+
+    Attributes:
+        code (str): Coupon code
+        discount_type (str): Type of discount (flat or percentage)
+        discount_value (Decimal): Amount of discount
+        expiry_date (datetime): When coupon expires
+        usage_limit (int): Maximum number of uses
     """
 
     code = models.TextField(
@@ -593,8 +687,17 @@ class Coupon(models.Model):
 
 
 class Plan(models.Model):
-    """
-    Plan: Defines the features, price, and billing cycle of a subscription.
+    """Abstract model for subscription plans.
+
+    Defines features, pricing, and billing cycle for subscriptions.
+
+    Attributes:
+        name (str): Plan name
+        description (str): Plan description
+        price (Decimal): Plan price
+        currency (str): 3-letter currency code
+        billing_cycle (str): Frequency of billing
+        feature (list): List of plan features
     """
 
     name = UpperTextField(
@@ -631,8 +734,13 @@ class Plan(models.Model):
 
 
 class PlanPlus(Plan):
-    """
-    Enhanced Plan
+    """Enhanced subscription plan model.
+
+    Extends Plan with additional features.
+
+    Attributes:
+        trial_period (int): Length of trial period
+        discount_eligible (bool): Whether plan can be discounted
     """
 
     trial_period = models.IntegerField(
@@ -648,8 +756,16 @@ class PlanPlus(Plan):
 
 
 class Subscription(models.Model):
-    """
-    Represents a customer's active subscription to a plan. The subscriptions table tracks the active state of a customer's subscription, including its start and end dates.
+    """Abstract model for active subscriptions.
+
+    Tracks customer subscription status and billing details.
+
+    Attributes:
+        start_date (datetime): When subscription begins
+        end_date (datetime): When subscription ends
+        next_billing_date (datetime): Next payment due date
+        prorated_amount (Decimal): Prorated charge amount
+        is_active (bool): Whether subscription is currently active
     """
 
     start_date = models.DateTimeField(
