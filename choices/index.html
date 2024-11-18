@@ -1134,7 +1134,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Boolean choice options with an empty default.</p>
@@ -1160,7 +1160,7 @@ data types and business domains.</p>
 <span class="normal">125</span>
 <span class="normal">126</span>
 <span class="normal">127</span>
-<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BooleanChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BooleanChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Boolean choice options with an empty default.&quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
@@ -1510,7 +1510,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Choices for flat or percentage values.</p>
@@ -1527,7 +1527,7 @@ data types and business domains.</p>
 <span class="normal"> 98</span>
 <span class="normal"> 99</span>
 <span class="normal">100</span>
-<span class="normal">101</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">FlatOrPercentChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">101</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">FlatOrPercentChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Choices for flat or percentage values.&quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
@@ -1569,7 +1569,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Available payment method options.</p>
@@ -1702,7 +1702,7 @@ data types and business domains.</p>
 <span class="normal">329</span>
 <span class="normal">330</span>
 <span class="normal">331</span>
-<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PaymentMethodTypeChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PaymentMethodTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Available payment method options.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1908,7 +1908,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Blood type classification options.</p>
@@ -2005,7 +2005,7 @@ data types and business domains.</p>
 <span class="normal">175</span>
 <span class="normal">176</span>
 <span class="normal">177</span>
-<span class="normal">178</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonBloodChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">178</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonBloodChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Blood type classification options.</span>
 
 <span class="sd">    Attributes:</span>
@@ -2058,7 +2058,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Academic achievement level classifications.</p>
@@ -2193,7 +2193,7 @@ data types and business domains.</p>
 <span class="normal">215</span>
 <span class="normal">216</span>
 <span class="normal">217</span>
-<span class="normal">218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEducationLevelChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEducationLevelChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Academic achievement level classifications.</span>
 
 <span class="sd">    Represents different levels of academic achievement from high school through doctoral degrees.</span>
@@ -2299,7 +2299,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Eye color classification options.</p>
@@ -2443,7 +2443,7 @@ data types and business domains.</p>
 <span class="normal">243</span>
 <span class="normal">244</span>
 <span class="normal">245</span>
-<span class="normal">246</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEyeColorChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">246</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEyeColorChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Eye color classification options.</span>
 
 <span class="sd">    References:</span>
@@ -2505,7 +2505,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Gender classification options.</p>
@@ -2576,7 +2576,7 @@ data types and business domains.</p>
 <span class="normal">258</span>
 <span class="normal">259</span>
 <span class="normal">260</span>
-<span class="normal">261</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonGenderChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">261</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonGenderChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gender classification options.</span>
 
 <span class="sd">    Attributes:</span>
@@ -2625,7 +2625,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Racial and ethnic classification options.</p>
@@ -2756,7 +2756,7 @@ data types and business domains.</p>
 <span class="normal">284</span>
 <span class="normal">285</span>
 <span class="normal">286</span>
-<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonRaceChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonRaceChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Racial and ethnic classification options.</span>
 
 <span class="sd">    References:</span>
@@ -2816,7 +2816,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Task processing status options.</p>
@@ -2914,7 +2914,7 @@ data types and business domains.</p>
 <span class="normal">155</span>
 <span class="normal">156</span>
 <span class="normal">157</span>
-<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TaskStatusChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TaskStatusChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Task processing status options.</span>
 
 <span class="sd">    Represents different states in a task&#39;s lifecycle from creation to completion.</span>
@@ -3042,7 +3042,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Choices for time frequency options.</p>
@@ -3061,7 +3061,7 @@ data types and business domains.</p>
 <span class="normal">108</span>
 <span class="normal">109</span>
 <span class="normal">110</span>
-<span class="normal">111</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TimeFrequencyChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">111</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TimeFrequencyChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Choices for time frequency options.&quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
@@ -3105,7 +3105,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Transaction lifecycle event types.</p>
@@ -3202,7 +3202,7 @@ data types and business domains.</p>
 <span class="normal">455</span>
 <span class="normal">456</span>
 <span class="normal">457</span>
-<span class="normal">458</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionEventTypeChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">458</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionEventTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transaction lifecycle event types.</span>
 
 <span class="sd">    Attributes:</span>
@@ -3255,7 +3255,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Supported payment processing gateways.</p>
@@ -3443,7 +3443,7 @@ data types and business domains.</p>
 <span class="normal">362</span>
 <span class="normal">363</span>
 <span class="normal">364</span>
-<span class="normal">365</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionGatewayChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">365</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionGatewayChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Supported payment processing gateways.</span>
 
 <span class="sd">    Attributes:</span>
@@ -3510,7 +3510,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Transaction processing state options.</p>
@@ -3646,7 +3646,7 @@ data types and business domains.</p>
 <span class="normal">404</span>
 <span class="normal">405</span>
 <span class="normal">406</span>
-<span class="normal">407</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionStateChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">407</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionStateChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transaction processing state options.</span>
 
 <span class="sd">    References:</span>
@@ -3780,7 +3780,7 @@ data types and business domains.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="django.db.models.TextChoices">TextChoices</span></code>, <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="django_util.choices.ChoicesMixin" href="#django_util.choices.ChoicesMixin">ChoicesMixin</a></code>, <code><span title="django.db.models.TextChoices">TextChoices</span></code></p>
 
 
         <p>Transaction classification options.</p>
@@ -3890,7 +3890,7 @@ data types and business domains.</p>
 <span class="normal">436</span>
 <span class="normal">437</span>
 <span class="normal">438</span>
-<span class="normal">439</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionTypeChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">,</span> <span class="n">ChoicesMixin</span><span class="p">):</span>
+<span class="normal">439</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transaction classification options.</span>
 
 <span class="sd">    Attributes:</span>
