@@ -64,33 +64,13 @@ TRUE_FALSE_CHOICES: List[Tuple[Union[bool, str], str]] = [
 ]
 
 
-class BaseChoices(models.TextChoices):
-    """Base class providing common functionality for all choice classes.
-
-    This class serves as the foundation for all choice classes in the module,
-    providing standard utility methods and consistent behavior.
-
-    Attributes:
-        DEFAULT (str): Empty string choice with "---" label
-
-    Methods:
-        get_values(): Returns set of all valid values excluding DEFAULT
-        get_labels(): Returns mapping of values to their display labels
-        is_valid(value): Checks if a value is valid for this choice set
-        get_label(value): Gets display label for a value
-        exclude_default(): Returns choices without the DEFAULT option
-    """
-
-    DEFAULT = "", _("---")
+class ChoicesMixin:
+    """Mixin providing utility methods for Django choice classes."""
 
     @classmethod
     def get_values(cls) -> Set[str]:
-        """Return set of all valid values excluding DEFAULT.
-
-        Returns:
-            Set[str]: Set of all choice values except DEFAULT
-        """
-        return {choice[0] for choice in cls.choices if choice[0]}
+        """Return set of all valid values."""
+        return {choice[0] for choice in cls.choices}
 
     @classmethod
     def get_labels(cls) -> Dict[str, str]:
@@ -113,26 +93,26 @@ class BaseChoices(models.TextChoices):
         return [(k, v) for k, v in cls.choices if k != ""]
 
 
-# Generic
-class BooleanChoices(models.TextChoices):
-    """Boolean choice options with an empty default.
+class FlatOrPercentChoices(models.TextChoices, ChoicesMixin):
+    """Choices for flat or percentage values."""
 
-    Provides a three-state boolean (True/False/None) for form fields.
-    Includes utility method for converting string values to Python booleans.
+    DEFAULT = "", _("---")
+    FLAT = "FLAT", _("Flat")
+    PERCENT = "PERCENT", _("Percent")
 
-    Attributes:
-        DEFAULT (str): Empty string choice with "---" label
-        YES (str): "TRUE" value with "Yes" label
-        NO (str): "FALSE" value with "No" label
 
-    Example:
-        class Settings(models.Model):
-            is_active = models.CharField(
-                max_length=5,
-                choices=BooleanChoices.choices,
-                default=BooleanChoices.DEFAULT
-            )
-    """
+class TimeFrequencyChoices(models.TextChoices, ChoicesMixin):
+    """Choices for time frequency options."""
+
+    DEFAULT = "", _("---")
+    DAILY = "DAILY", _("Daily")
+    WEEKLY = "WEEKLY", _("Weekly")
+    MONTHLY = "MONTHLY", _("Monthly")
+    YEARLY = "YEARLY", _("Yearly")
+
+
+class BooleanChoices(models.TextChoices, ChoicesMixin):
+    """Boolean choice options with an empty default."""
 
     DEFAULT = "", _("---")
     YES = "TRUE", _("Yes")
@@ -147,96 +127,8 @@ class BooleanChoices(models.TextChoices):
             return False
         return None
 
-    @classmethod
-    def get_values(cls) -> Set[str]:
-        """Return set of all valid values excluding DEFAULT."""
-        return {choice[0] for choice in cls.choices if choice[0]}
 
-    @classmethod
-    def get_labels(cls) -> Dict[str, str]:
-        """Return mapping of values to their display labels."""
-        return {choice[0]: choice[1] for choice in cls.choices}
-
-    @classmethod
-    def is_valid(cls, value: str) -> bool:
-        """Check if a value is valid for this choice set."""
-        return value in cls.get_values()
-
-    @classmethod
-    def get_label(cls, value: str) -> Optional[str]:
-        """Get display label for a value."""
-        return cls.get_labels().get(value)
-
-    @classmethod
-    def exclude_default(cls) -> List[Tuple[str, str]]:
-        """Return choices without the DEFAULT option."""
-        return [(k, v) for k, v in cls.choices if k != ""]
-
-
-class FlatOrPercentChoices(BaseChoices):
-    """Flat or percent choices for rate calculations.
-
-    Attributes:
-        FLAT (str): Flat rate option
-        PERCENT (str): Percentage rate option
-    """
-
-    FLAT = "FLAT", _("Flat")
-    PERCENT = "PERCENT", _("Percent")
-
-
-class TimeFrequencyChoices(BaseChoices):
-    """Time frequency options for recurring events.
-
-    Provides standard time frequency options with utility methods for
-    calculating durations and intervals.
-
-    Attributes:
-        HOURLY (str): Hourly frequency option
-        DAILY (str): Daily frequency option
-        WEEKLY (str): Weekly frequency option
-        MONTHLY (str): Monthly frequency option
-        QUARTERLY (str): Quarterly frequency option
-        ANNUALLY (str): Annually frequency option
-
-    Example:
-        class Schedule(models.Model):
-            frequency = models.CharField(
-                max_length=20,
-                choices=TimeFrequencyChoices.choices,
-                default=TimeFrequencyChoices.DAILY
-            )
-    """
-
-    HOURLY = "HOURLY", _("Hourly")
-    DAILY = "DAILY", _("Daily")
-    WEEKLY = "WEEKLY", _("Weekly")
-    MONTHLY = "MONTHLY", _("Monthly")
-    QUARTERLY = "QUARTERLY", _("Quarterly")
-    ANNUALLY = "ANNUALLY", _("Annually")
-
-    DURATION_MAPPING = {
-        HOURLY: timedelta(hours=1),
-        DAILY: timedelta(days=1),
-        WEEKLY: timedelta(weeks=1),
-        MONTHLY: timedelta(days=30),  # Approximate
-        QUARTERLY: timedelta(days=91),  # Approximate
-        ANNUALLY: timedelta(days=365),
-    }
-
-    @classmethod
-    def get_timedelta(cls, frequency: str) -> Optional[timedelta]:
-        """Get timedelta for a frequency value."""
-        return cls.DURATION_MAPPING.get(frequency)
-
-    @classmethod
-    def get_seconds(cls, frequency: str) -> Optional[int]:
-        """Get duration in seconds for a frequency."""
-        delta = cls.get_timedelta(frequency)
-        return int(delta.total_seconds()) if delta else None
-
-
-class TaskStatusChoices(BaseChoices):
+class TaskStatusChoices(models.TextChoices, ChoicesMixin):
     """Task processing status options.
 
     Represents different states in a task's lifecycle from creation to completion.
@@ -248,6 +140,7 @@ class TaskStatusChoices(BaseChoices):
         FAILED (str): Task has failed to complete
     """
 
+    DEFAULT = "", _("---")
     PENDING = "PENDING", _("Pending")
     IN_PROGRESS = "IN_PROGRESS", _("In Progress")
     COMPLETED = "COMPLETED", _("Completed")
@@ -266,7 +159,7 @@ class TaskStatusChoices(BaseChoices):
 
 
 # Person
-class PersonBloodChoices(BaseChoices):
+class PersonBloodChoices(models.TextChoices, ChoicesMixin):
     """Blood type classification options.
 
     Attributes:
@@ -277,6 +170,7 @@ class PersonBloodChoices(BaseChoices):
         OTHERS (str): Other blood types
     """
 
+    DEFAULT = "", _("---")
     A = "A", _("A")
     B = "B", _("B")
     AB = "AB", _("AB")
@@ -284,7 +178,7 @@ class PersonBloodChoices(BaseChoices):
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonEducationLevelChoices(BaseChoices):
+class PersonEducationLevelChoices(models.TextChoices, ChoicesMixin):
     """Academic achievement level classifications.
 
     Represents different levels of academic achievement from high school through doctoral degrees.
@@ -301,6 +195,7 @@ class PersonEducationLevelChoices(BaseChoices):
         OTHERS (str): Other education levels
     """
 
+    DEFAULT = "", _("---")
     HIGH_SCHOOL = "HIGH_SCHOOL", _("High School")
     ASSOCIATE = "ASSOCIATE", _("Associate Degree")
     BACHELOR = "BACHELOR", _("Bachelor's Degree")
@@ -323,7 +218,7 @@ class PersonEducationLevelChoices(BaseChoices):
         return cls.EDUCATION_YEARS.get(level, 0)
 
 
-class PersonEyeColorChoices(BaseChoices):
+class PersonEyeColorChoices(models.TextChoices, ChoicesMixin):
     """Eye color classification options.
 
     References:
@@ -340,6 +235,7 @@ class PersonEyeColorChoices(BaseChoices):
         OTHERS (str): Other eye colors
     """
 
+    DEFAULT = "", _("---")
     AMBER = "AMBER", _("Amber")
     BLUE = "BLUE", _("Blue")
     BROWN = "BROWN", _("Brown")
@@ -350,7 +246,7 @@ class PersonEyeColorChoices(BaseChoices):
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonGenderChoices(BaseChoices):
+class PersonGenderChoices(models.TextChoices, ChoicesMixin):
     """Gender classification options.
 
     Attributes:
@@ -359,12 +255,13 @@ class PersonGenderChoices(BaseChoices):
         OTHERS (str): Other gender identifications
     """
 
+    DEFAULT = "", _("---")
     FEMALE = "FEMALE", _("Female")
     MALE = "MALE", _("Male")
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonRaceChoices(BaseChoices):
+class PersonRaceChoices(models.TextChoices, ChoicesMixin):
     """Racial and ethnic classification options.
 
     References:
@@ -380,6 +277,7 @@ class PersonRaceChoices(BaseChoices):
         OTHERS (str): Other racial or ethnic identifications
     """
 
+    DEFAULT = "", _("---")
     ASIAN = "ASIAN", _("Asian")
     BLACK = "BLACK", _("Black Or African American")
     HISPANIC = "HISPANIC", _("Hispanic Or Latino")
@@ -390,7 +288,7 @@ class PersonRaceChoices(BaseChoices):
 
 
 # Payment / Transaction
-class PaymentMethodTypeChoices(BaseChoices):
+class PaymentMethodTypeChoices(models.TextChoices, ChoicesMixin):
     """Available payment method options.
 
     Attributes:
@@ -402,6 +300,7 @@ class PaymentMethodTypeChoices(BaseChoices):
         GOOGLE_PAY (str): Google Pay payment method
     """
 
+    DEFAULT = "", _("---")
     CREDIT_CARD = "CREDIT_CARD", _("Credit Card")
     DEBIT_CARD = "DEBIT_CARD", _("Debit Card")
     ELECTRONIC_BANK_TRANSFER = "BANK_TRANSFER", _("Bank Transfer")
@@ -433,7 +332,7 @@ class PaymentMethodTypeChoices(BaseChoices):
         return {cls.PAYPAL, cls.APPLE_PAY, cls.GOOGLE_PAY}
 
 
-class TransactionGatewayChoices(BaseChoices):
+class TransactionGatewayChoices(models.TextChoices, ChoicesMixin):
     """Supported payment processing gateways.
 
     Attributes:
@@ -451,6 +350,7 @@ class TransactionGatewayChoices(BaseChoices):
         WORLDPAY (str): Worldpay payment gateway
     """
 
+    DEFAULT = "", _("---")
     ADYEN = "ADYEN", _("Adyen")
     ALIPAY = "ALIPAY", _("Alipay")
     AMAZON = "AMAZON", _("Amazon")
@@ -465,7 +365,7 @@ class TransactionGatewayChoices(BaseChoices):
     WORLDPAY = "WORLDPAY", _("Worldpay")
 
 
-class TransactionStateChoices(BaseChoices):
+class TransactionStateChoices(models.TextChoices, ChoicesMixin):
     """Transaction processing state options.
 
     References:
@@ -480,6 +380,7 @@ class TransactionStateChoices(BaseChoices):
         SUCCESS (str): Transaction completed successfully
     """
 
+    DEFAULT = "", _("---")
     REQUIRES_PAYMENT_METHOD = "REQUIRES_PAYMENT_METHOD", _("Requires Payment Method")
     REQUIRES_CONFIRMATION = "REQUIRES_CONFIRMATION", _("Requires Confirmation")
     REQUIRES_ACTION = "REQUIRES_ACTION", _("Requires Action")
@@ -506,7 +407,7 @@ class TransactionStateChoices(BaseChoices):
         return new_state in VALID_TRANSITIONS.get(current_state, set())
 
 
-class TransactionTypeChoices(BaseChoices):
+class TransactionTypeChoices(models.TextChoices, ChoicesMixin):
     """Transaction classification options.
 
     Attributes:
@@ -517,6 +418,7 @@ class TransactionTypeChoices(BaseChoices):
         PRORATION (str): Proration transaction
     """
 
+    DEFAULT = "", _("---")
     PAYMENT = "PAYMENT", _("Payment")
     REFUND = "REFUND", _("Refund")
     ADJUSTMENT = "ADJUSTMENT", _("Adjustment")
@@ -537,7 +439,7 @@ class TransactionTypeChoices(BaseChoices):
         return trans_type in cls.REQUIRES_PROCESSING
 
 
-class TransactionEventTypeChoices(BaseChoices):
+class TransactionEventTypeChoices(models.TextChoices, ChoicesMixin):
     """Transaction lifecycle event types.
 
     Attributes:
@@ -548,6 +450,7 @@ class TransactionEventTypeChoices(BaseChoices):
         FAILED (str): Transaction has failed
     """
 
+    DEFAULT = "", _("---")
     CREATED = "CREATED", _("Created")
     AUTHORIZED = "AUTHORIZED", _("Authorized")
     CAPTURED = "CAPTURED", _("Captured")
