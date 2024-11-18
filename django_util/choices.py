@@ -93,7 +93,7 @@ class ChoicesMixin:
         return [(k, v) for k, v in cls.choices if k != ""]
 
 
-class FlatOrPercentChoices(models.TextChoices, ChoicesMixin):
+class FlatOrPercentChoices(ChoicesMixin, models.TextChoices):
     """Choices for flat or percentage values."""
 
     DEFAULT = "", _("---")
@@ -101,7 +101,7 @@ class FlatOrPercentChoices(models.TextChoices, ChoicesMixin):
     PERCENT = "PERCENT", _("Percent")
 
 
-class TimeFrequencyChoices(models.TextChoices, ChoicesMixin):
+class TimeFrequencyChoices(ChoicesMixin, models.TextChoices):
     """Choices for time frequency options."""
 
     DEFAULT = "", _("---")
@@ -111,7 +111,7 @@ class TimeFrequencyChoices(models.TextChoices, ChoicesMixin):
     YEARLY = "YEARLY", _("Yearly")
 
 
-class BooleanChoices(models.TextChoices, ChoicesMixin):
+class BooleanChoices(ChoicesMixin, models.TextChoices):
     """Boolean choice options with an empty default."""
 
     DEFAULT = "", _("---")
@@ -128,7 +128,7 @@ class BooleanChoices(models.TextChoices, ChoicesMixin):
         return None
 
 
-class TaskStatusChoices(models.TextChoices, ChoicesMixin):
+class TaskStatusChoices(ChoicesMixin, models.TextChoices):
     """Task processing status options.
 
     Represents different states in a task's lifecycle from creation to completion.
@@ -159,7 +159,7 @@ class TaskStatusChoices(models.TextChoices, ChoicesMixin):
 
 
 # Person
-class PersonBloodChoices(models.TextChoices, ChoicesMixin):
+class PersonBloodChoices(ChoicesMixin, models.TextChoices):
     """Blood type classification options.
 
     Attributes:
@@ -178,7 +178,7 @@ class PersonBloodChoices(models.TextChoices, ChoicesMixin):
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonEducationLevelChoices(models.TextChoices, ChoicesMixin):
+class PersonEducationLevelChoices(ChoicesMixin, models.TextChoices):
     """Academic achievement level classifications.
 
     Represents different levels of academic achievement from high school through doctoral degrees.
@@ -218,7 +218,7 @@ class PersonEducationLevelChoices(models.TextChoices, ChoicesMixin):
         return cls.EDUCATION_YEARS.get(level, 0)
 
 
-class PersonEyeColorChoices(models.TextChoices, ChoicesMixin):
+class PersonEyeColorChoices(ChoicesMixin, models.TextChoices):
     """Eye color classification options.
 
     References:
@@ -246,7 +246,7 @@ class PersonEyeColorChoices(models.TextChoices, ChoicesMixin):
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonGenderChoices(models.TextChoices, ChoicesMixin):
+class PersonGenderChoices(ChoicesMixin, models.TextChoices):
     """Gender classification options.
 
     Attributes:
@@ -261,7 +261,7 @@ class PersonGenderChoices(models.TextChoices, ChoicesMixin):
     OTHERS = "OTHERS", _("Others")
 
 
-class PersonRaceChoices(models.TextChoices, ChoicesMixin):
+class PersonRaceChoices(ChoicesMixin, models.TextChoices):
     """Racial and ethnic classification options.
 
     References:
@@ -288,7 +288,7 @@ class PersonRaceChoices(models.TextChoices, ChoicesMixin):
 
 
 # Payment / Transaction
-class PaymentMethodTypeChoices(models.TextChoices, ChoicesMixin):
+class PaymentMethodTypeChoices(ChoicesMixin, models.TextChoices):
     """Available payment method options.
 
     Attributes:
@@ -332,7 +332,7 @@ class PaymentMethodTypeChoices(models.TextChoices, ChoicesMixin):
         return {cls.PAYPAL, cls.APPLE_PAY, cls.GOOGLE_PAY}
 
 
-class TransactionGatewayChoices(models.TextChoices, ChoicesMixin):
+class TransactionGatewayChoices(ChoicesMixin, models.TextChoices):
     """Supported payment processing gateways.
 
     Attributes:
@@ -365,7 +365,7 @@ class TransactionGatewayChoices(models.TextChoices, ChoicesMixin):
     WORLDPAY = "WORLDPAY", _("Worldpay")
 
 
-class TransactionStateChoices(models.TextChoices, ChoicesMixin):
+class TransactionStateChoices(ChoicesMixin, models.TextChoices):
     """Transaction processing state options.
 
     References:
@@ -407,7 +407,7 @@ class TransactionStateChoices(models.TextChoices, ChoicesMixin):
         return new_state in VALID_TRANSITIONS.get(current_state, set())
 
 
-class TransactionTypeChoices(models.TextChoices, ChoicesMixin):
+class TransactionTypeChoices(ChoicesMixin, models.TextChoices):
     """Transaction classification options.
 
     Attributes:
@@ -439,7 +439,7 @@ class TransactionTypeChoices(models.TextChoices, ChoicesMixin):
         return trans_type in cls.REQUIRES_PROCESSING
 
 
-class TransactionEventTypeChoices(models.TextChoices, ChoicesMixin):
+class TransactionEventTypeChoices(ChoicesMixin, models.TextChoices):
     """Transaction lifecycle event types.
 
     Attributes:
