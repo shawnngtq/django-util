@@ -114,7 +114,7 @@ class BaseChoices(models.TextChoices):
 
 
 # Generic
-class BooleanChoices(BaseChoices):
+class BooleanChoices(models.TextChoices):
     """Boolean choice options with an empty default.
 
     Provides a three-state boolean (True/False/None) for form fields.
@@ -134,6 +134,7 @@ class BooleanChoices(BaseChoices):
             )
     """
 
+    DEFAULT = "", _("---")
     YES = "TRUE", _("Yes")
     NO = "FALSE", _("No")
 
@@ -145,6 +146,31 @@ class BooleanChoices(BaseChoices):
         if value == cls.NO:
             return False
         return None
+
+    @classmethod
+    def get_values(cls) -> Set[str]:
+        """Return set of all valid values excluding DEFAULT."""
+        return {choice[0] for choice in cls.choices if choice[0]}
+
+    @classmethod
+    def get_labels(cls) -> Dict[str, str]:
+        """Return mapping of values to their display labels."""
+        return {choice[0]: choice[1] for choice in cls.choices}
+
+    @classmethod
+    def is_valid(cls, value: str) -> bool:
+        """Check if a value is valid for this choice set."""
+        return value in cls.get_values()
+
+    @classmethod
+    def get_label(cls, value: str) -> Optional[str]:
+        """Get display label for a value."""
+        return cls.get_labels().get(value)
+
+    @classmethod
+    def exclude_default(cls) -> List[Tuple[str, str]]:
+        """Return choices without the DEFAULT option."""
+        return [(k, v) for k, v in cls.choices if k != ""]
 
 
 class FlatOrPercentChoices(BaseChoices):
