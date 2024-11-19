@@ -1661,8 +1661,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">291</span>
-<span class="normal">292</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">292</span>
 <span class="normal">293</span>
 <span class="normal">294</span>
 <span class="normal">295</span>
@@ -1702,7 +1701,8 @@ data types and business domains.</p>
 <span class="normal">329</span>
 <span class="normal">330</span>
 <span class="normal">331</span>
-<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PaymentMethodTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">332</span>
+<span class="normal">333</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PaymentMethodTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Available payment method options.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1778,10 +1778,10 @@ data types and business domains.</p>
 
             <details class="quote">
               <summary>Source code in <code>django_util/choices.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">324</span>
-<span class="normal">325</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">325</span>
 <span class="normal">326</span>
-<span class="normal">327</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">327</span>
+<span class="normal">328</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">card_methods</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return all card-based payment methods.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">CREDIT_CARD</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEBIT_CARD</span><span class="p">}</span>
@@ -1810,10 +1810,10 @@ data types and business domains.</p>
 
             <details class="quote">
               <summary>Source code in <code>django_util/choices.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">329</span>
-<span class="normal">330</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">330</span>
 <span class="normal">331</span>
-<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">332</span>
+<span class="normal">333</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">digital_wallet_methods</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return all digital wallet payment methods.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">PAYPAL</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">APPLE_PAY</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">GOOGLE_PAY</span><span class="p">}</span>
@@ -1842,10 +1842,10 @@ data types and business domains.</p>
 
             <details class="quote">
               <summary>Source code in <code>django_util/choices.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">319</span>
-<span class="normal">320</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">320</span>
 <span class="normal">321</span>
-<span class="normal">322</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">322</span>
+<span class="normal">323</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">requires_3ds</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if payment method requires 3D Secure.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">method</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">REQUIRES_3DS</span>
@@ -1874,10 +1874,10 @@ data types and business domains.</p>
 
             <details class="quote">
               <summary>Source code in <code>django_util/choices.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">314</span>
-<span class="normal">315</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">315</span>
 <span class="normal">316</span>
-<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">317</span>
+<span class="normal">318</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">requires_cvv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if payment method requires CVV.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">method</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">REQUIRES_CVV</span>
@@ -2156,17 +2156,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">181</span>
-<span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">191</span>
 <span class="normal">192</span>
 <span class="normal">193</span>
 <span class="normal">194</span>
@@ -2193,7 +2183,8 @@ data types and business domains.</p>
 <span class="normal">215</span>
 <span class="normal">216</span>
 <span class="normal">217</span>
-<span class="normal">218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEducationLevelChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">218</span>
+<span class="normal">219</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEducationLevelChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Academic achievement level classifications.</span>
 
 <span class="sd">    Represents different levels of academic achievement from high school through doctoral degrees.</span>
@@ -2218,19 +2209,10 @@ data types and business domains.</p>
     <span class="n">DOCTORAL</span> <span class="o">=</span> <span class="s2">&quot;DOCTORAL&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Doctoral Degree&quot;</span><span class="p">)</span>
     <span class="n">OTHERS</span> <span class="o">=</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Others&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Define education years as a separate class attribute</span>
-    <span class="n">EDUCATION_YEARS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;HIGH_SCHOOL&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
-        <span class="s2">&quot;ASSOCIATE&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
-        <span class="s2">&quot;BACHELOR&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
-        <span class="s2">&quot;MASTER&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
-        <span class="s2">&quot;DOCTORAL&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
-    <span class="p">}</span>
-
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_education_years</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return typical years of education for given level.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">EDUCATION_YEARS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">EDUCATION_LEVEL_YEARS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -2265,13 +2247,13 @@ data types and business domains.</p>
 
             <details class="quote">
               <summary>Source code in <code>django_util/choices.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">215</span>
-<span class="normal">216</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">216</span>
 <span class="normal">217</span>
-<span class="normal">218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">218</span>
+<span class="normal">219</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">get_education_years</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return typical years of education for given level.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">EDUCATION_YEARS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">EDUCATION_LEVEL_YEARS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2418,8 +2400,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">221</span>
-<span class="normal">222</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">222</span>
 <span class="normal">223</span>
 <span class="normal">224</span>
 <span class="normal">225</span>
@@ -2443,7 +2424,8 @@ data types and business domains.</p>
 <span class="normal">243</span>
 <span class="normal">244</span>
 <span class="normal">245</span>
-<span class="normal">246</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEyeColorChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">246</span>
+<span class="normal">247</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonEyeColorChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Eye color classification options.</span>
 
 <span class="sd">    References:</span>
@@ -2564,8 +2546,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">249</span>
-<span class="normal">250</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">250</span>
 <span class="normal">251</span>
 <span class="normal">252</span>
 <span class="normal">253</span>
@@ -2576,7 +2557,8 @@ data types and business domains.</p>
 <span class="normal">258</span>
 <span class="normal">259</span>
 <span class="normal">260</span>
-<span class="normal">261</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonGenderChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">261</span>
+<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonGenderChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gender classification options.</span>
 
 <span class="sd">    Attributes:</span>
@@ -2733,8 +2715,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">264</span>
-<span class="normal">265</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">265</span>
 <span class="normal">266</span>
 <span class="normal">267</span>
 <span class="normal">268</span>
@@ -2756,7 +2737,8 @@ data types and business domains.</p>
 <span class="normal">284</span>
 <span class="normal">285</span>
 <span class="normal">286</span>
-<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonRaceChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">287</span>
+<span class="normal">288</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PersonRaceChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Racial and ethnic classification options.</span>
 
 <span class="sd">    References:</span>
@@ -3186,8 +3168,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">442</span>
-<span class="normal">443</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">443</span>
 <span class="normal">444</span>
 <span class="normal">445</span>
 <span class="normal">446</span>
@@ -3202,7 +3183,8 @@ data types and business domains.</p>
 <span class="normal">455</span>
 <span class="normal">456</span>
 <span class="normal">457</span>
-<span class="normal">458</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionEventTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">458</span>
+<span class="normal">459</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionEventTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transaction lifecycle event types.</span>
 
 <span class="sd">    Attributes:</span>
@@ -3413,8 +3395,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">335</span>
-<span class="normal">336</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">336</span>
 <span class="normal">337</span>
 <span class="normal">338</span>
 <span class="normal">339</span>
@@ -3443,7 +3424,8 @@ data types and business domains.</p>
 <span class="normal">362</span>
 <span class="normal">363</span>
 <span class="normal">364</span>
-<span class="normal">365</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionGatewayChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">365</span>
+<span class="normal">366</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionGatewayChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Supported payment processing gateways.</span>
 
 <span class="sd">    Attributes:</span>
@@ -3607,8 +3589,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">368</span>
-<span class="normal">369</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">369</span>
 <span class="normal">370</span>
 <span class="normal">371</span>
 <span class="normal">372</span>
@@ -3646,7 +3627,8 @@ data types and business domains.</p>
 <span class="normal">404</span>
 <span class="normal">405</span>
 <span class="normal">406</span>
-<span class="normal">407</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionStateChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">407</span>
+<span class="normal">408</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionStateChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transaction processing state options.</span>
 
 <span class="sd">    References:</span>
@@ -3720,8 +3702,7 @@ data types and business domains.</p>
 
             <details class="quote">
               <summary>Source code in <code>django_util/choices.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">391</span>
-<span class="normal">392</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">392</span>
 <span class="normal">393</span>
 <span class="normal">394</span>
 <span class="normal">395</span>
@@ -3736,7 +3717,8 @@ data types and business domains.</p>
 <span class="normal">404</span>
 <span class="normal">405</span>
 <span class="normal">406</span>
-<span class="normal">407</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">407</span>
+<span class="normal">408</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">can_transition_to</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">current_state</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_state</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate if a state transition is allowed.&quot;&quot;&quot;</span>
     <span class="n">VALID_TRANSITIONS</span> <span class="o">=</span> <span class="p">{</span>
@@ -3861,8 +3843,7 @@ data types and business domains.</p>
 
               <details class="quote">
                 <summary>Source code in <code>django_util/choices.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">410</span>
-<span class="normal">411</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">411</span>
 <span class="normal">412</span>
 <span class="normal">413</span>
 <span class="normal">414</span>
@@ -3890,7 +3871,8 @@ data types and business domains.</p>
 <span class="normal">436</span>
 <span class="normal">437</span>
 <span class="normal">438</span>
-<span class="normal">439</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="normal">439</span>
+<span class="normal">440</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TransactionTypeChoices</span><span class="p">(</span><span class="n">ChoicesMixin</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transaction classification options.</span>
 
 <span class="sd">    Attributes:</span>
@@ -3954,10 +3936,10 @@ data types and business domains.</p>
 
             <details class="quote">
               <summary>Source code in <code>django_util/choices.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">431</span>
-<span class="normal">432</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">432</span>
 <span class="normal">433</span>
-<span class="normal">434</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">434</span>
+<span class="normal">435</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">affects_balance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">trans_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if transaction type affects account balance.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">trans_type</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">AFFECTS_BALANCE</span>
@@ -3986,10 +3968,10 @@ data types and business domains.</p>
 
             <details class="quote">
               <summary>Source code in <code>django_util/choices.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">436</span>
-<span class="normal">437</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">437</span>
 <span class="normal">438</span>
-<span class="normal">439</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">439</span>
+<span class="normal">440</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">requires_processing</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">trans_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if transaction type requires payment processing.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">trans_type</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">REQUIRES_PROCESSING</span>
