@@ -178,6 +178,16 @@ class PersonBloodChoices(ChoicesMixin, models.TextChoices):
     OTHERS = "OTHERS", _("Others")
 
 
+# Define education years mapping outside the class
+EDUCATION_LEVEL_YEARS = {
+    "HIGH_SCHOOL": 12,
+    "ASSOCIATE": 14,
+    "BACHELOR": 16,
+    "MASTER": 18,
+    "DOCTORAL": 20,
+}
+
+
 class PersonEducationLevelChoices(ChoicesMixin, models.TextChoices):
     """Academic achievement level classifications.
 
@@ -203,19 +213,10 @@ class PersonEducationLevelChoices(ChoicesMixin, models.TextChoices):
     DOCTORAL = "DOCTORAL", _("Doctoral Degree")
     OTHERS = "OTHERS", _("Others")
 
-    # Define education years as a separate class attribute
-    EDUCATION_YEARS = {
-        "HIGH_SCHOOL": 12,
-        "ASSOCIATE": 14,
-        "BACHELOR": 16,
-        "MASTER": 18,
-        "DOCTORAL": 20,
-    }
-
     @classmethod
     def get_education_years(cls, level: str) -> int:
         """Return typical years of education for given level."""
-        return cls.EDUCATION_YEARS.get(level, 0)
+        return EDUCATION_LEVEL_YEARS.get(level, 0)
 
 
 class PersonEyeColorChoices(ChoicesMixin, models.TextChoices):
