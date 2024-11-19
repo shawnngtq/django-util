@@ -203,13 +203,13 @@ class PersonEducationLevelChoices(ChoicesMixin, models.TextChoices):
     DOCTORAL = "DOCTORAL", _("Doctoral Degree")
     OTHERS = "OTHERS", _("Others")
 
-    # Add metadata as class attributes
+    # Define education years as a separate class attribute
     EDUCATION_YEARS = {
-        HIGH_SCHOOL: 12,
-        ASSOCIATE: 14,
-        BACHELOR: 16,
-        MASTER: 18,
-        DOCTORAL: 20,
+        "HIGH_SCHOOL": 12,
+        "ASSOCIATE": 14,
+        "BACHELOR": 16,
+        "MASTER": 18,
+        "DOCTORAL": 20,
     }
 
     @classmethod
