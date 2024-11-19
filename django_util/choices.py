@@ -63,6 +63,35 @@ TRUE_FALSE_CHOICES: List[Tuple[Union[bool, str], str]] = [
     (False, "False"),
 ]
 
+# Define all metadata outside the classes
+PAYMENT_METHODS_REQUIRING_CVV = {"CREDIT_CARD", "DEBIT_CARD"}
+PAYMENT_METHODS_REQUIRING_3DS = {"CREDIT_CARD", "DEBIT_CARD"}
+
+EDUCATION_LEVEL_YEARS = {
+    "HIGH_SCHOOL": 12,
+    "ASSOCIATE": 14,
+    "BACHELOR": 16,
+    "MASTER": 18,
+    "DOCTORAL": 20,
+}
+
+TRANSACTION_TYPE_AFFECTS_BALANCE = {"PAYMENT", "REFUND", "ADJUSTMENT"}
+TRANSACTION_TYPE_REQUIRES_PROCESSING = {"PAYMENT", "REFUND"}
+
+TRANSACTION_STATE_TRANSITIONS = {
+    "": {"REQUIRES_PAYMENT_METHOD"},
+    "REQUIRES_PAYMENT_METHOD": {"REQUIRES_CONFIRMATION", "CANCEL"},
+    "REQUIRES_CONFIRMATION": {
+        "REQUIRES_ACTION",
+        "PROCESSING",
+        "CANCEL",
+    },
+    "REQUIRES_ACTION": {"PROCESSING", "CANCEL"},
+    "PROCESSING": {"SUCCESS", "CANCEL"},
+    "SUCCESS": set(),  # Terminal state
+    "CANCEL": set(),  # Terminal state
+}
+
 
 class ChoicesMixin:
     """Mixin providing utility methods for Django choice classes."""
@@ -146,14 +175,13 @@ class TaskStatusChoices(ChoicesMixin, models.TextChoices):
     COMPLETED = "COMPLETED", _("Completed")
     FAILED = "FAILED", _("Failed")
 
-    # Add class methods for common validations
     @classmethod
-    def is_terminal_state(cls, status):
+    def is_terminal_state(cls, status: str) -> bool:
         """Check if the status is in a terminal state (completed or failed)."""
         return status in {cls.COMPLETED, cls.FAILED}
 
     @classmethod
-    def is_active_state(cls, status):
+    def is_active_state(cls, status: str) -> bool:
         """Check if the status is in an active state (pending or in progress)."""
         return status in {cls.PENDING, cls.IN_PROGRESS}
 
@@ -176,16 +204,6 @@ class PersonBloodChoices(ChoicesMixin, models.TextChoices):
     AB = "AB", _("AB")
     O = "O", _("O")
     OTHERS = "OTHERS", _("Others")
-
-
-# Define education years mapping outside the class
-EDUCATION_LEVEL_YEARS = {
-    "HIGH_SCHOOL": 12,
-    "ASSOCIATE": 14,
-    "BACHELOR": 16,
-    "MASTER": 18,
-    "DOCTORAL": 20,
-}
 
 
 class PersonEducationLevelChoices(ChoicesMixin, models.TextChoices):
@@ -309,18 +327,15 @@ class PaymentMethodTypeChoices(ChoicesMixin, models.TextChoices):
     APPLE_PAY = "APPLE_PAY", _("Apple Pay")
     GOOGLE_PAY = "GOOGLE_PAY", _("Google Pay")
 
-    REQUIRES_CVV = {CREDIT_CARD, DEBIT_CARD}
-    REQUIRES_3DS = {CREDIT_CARD, DEBIT_CARD}
-
     @classmethod
     def requires_cvv(cls, method: str) -> bool:
         """Check if payment method requires CVV."""
-        return method in cls.REQUIRES_CVV
+        return method in PAYMENT_METHODS_REQUIRING_CVV
 
     @classmethod
     def requires_3ds(cls, method: str) -> bool:
         """Check if payment method requires 3D Secure."""
-        return method in cls.REQUIRES_3DS
+        return method in PAYMENT_METHODS_REQUIRING_3DS
 
     @classmethod
     def card_methods(cls) -> set:
@@ -392,20 +407,7 @@ class TransactionStateChoices(ChoicesMixin, models.TextChoices):
     @classmethod
     def can_transition_to(cls, current_state: str, new_state: str) -> bool:
         """Validate if a state transition is allowed."""
-        VALID_TRANSITIONS = {
-            cls.DEFAULT: {cls.REQUIRES_PAYMENT_METHOD},
-            cls.REQUIRES_PAYMENT_METHOD: {cls.REQUIRES_CONFIRMATION, cls.CANCEL},
-            cls.REQUIRES_CONFIRMATION: {
-                cls.REQUIRES_ACTION,
-                cls.PROCESSING,
-                cls.CANCEL,
-            },
-            cls.REQUIRES_ACTION: {cls.PROCESSING, cls.CANCEL},
-            cls.PROCESSING: {cls.SUCCESS, cls.CANCEL},
-            cls.SUCCESS: set(),  # Terminal state
-            cls.CANCEL: set(),  # Terminal state
-        }
-        return new_state in VALID_TRANSITIONS.get(current_state, set())
+        return new_state in TRANSACTION_STATE_TRANSITIONS.get(current_state, set())
 
 
 class TransactionTypeChoices(ChoicesMixin, models.TextChoices):
@@ -426,18 +428,15 @@ class TransactionTypeChoices(ChoicesMixin, models.TextChoices):
     COUPON = "COUPON", _("Coupon")
     PRORATION = "PRORATION", _("Proration")
 
-    AFFECTS_BALANCE = {PAYMENT, REFUND, ADJUSTMENT}
-    REQUIRES_PROCESSING = {PAYMENT, REFUND}
-
     @classmethod
     def affects_balance(cls, trans_type: str) -> bool:
         """Check if transaction type affects account balance."""
-        return trans_type in cls.AFFECTS_BALANCE
+        return trans_type in TRANSACTION_TYPE_AFFECTS_BALANCE
 
     @classmethod
     def requires_processing(cls, trans_type: str) -> bool:
         """Check if transaction type requires payment processing."""
-        return trans_type in cls.REQUIRES_PROCESSING
+        return trans_type in TRANSACTION_TYPE_REQUIRES_PROCESSING
 
 
 class TransactionEventTypeChoices(ChoicesMixin, models.TextChoices):
