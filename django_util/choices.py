@@ -33,6 +33,7 @@ GENERIC_CHOICES = [
     "FlatOrPercentChoices",
     "TimeFrequencyChoices",
     "TaskStatusChoices",
+    "DataImportStrategy",
 ]
 
 PERSON_CHOICES = [
@@ -94,11 +95,29 @@ TRANSACTION_STATE_TRANSITIONS = {
 
 
 class ChoicesMixin:
-    """Mixin providing utility methods for Django choice classes."""
+    """Mixin providing utility methods for Django choice classes.
+
+    This mixin adds common functionality to choice classes including value validation,
+    label retrieval, and choice list manipulation.
+
+    Example:
+        class MyChoices(ChoicesMixin, models.TextChoices):
+            DEFAULT = "", _("---")
+            OPTION_A = "A", _("Option A")
+            OPTION_B = "B", _("Option B")
+
+            # Now has access to utility methods:
+            MyChoices.is_valid("A")  # Returns True
+            MyChoices.get_label("B")  # Returns "Option B"
+    """
 
     @classmethod
     def get_values(cls) -> Set[str]:
-        """Return set of all valid values."""
+        """Return set of all valid choice values.
+
+        Returns:
+            Set[str]: A set containing all possible choice values excluding labels.
+        """
         return {choice[0] for choice in cls.choices}
 
     @classmethod
@@ -108,7 +127,14 @@ class ChoicesMixin:
 
     @classmethod
     def is_valid(cls, value: str) -> bool:
-        """Check if a value is valid for this choice set."""
+        """Check if a value is valid for this choice set.
+
+        Args:
+            value (str): The choice value to validate.
+
+        Returns:
+            bool: True if the value is valid, False otherwise.
+        """
         return value in cls.get_values()
 
     @classmethod
@@ -184,6 +210,45 @@ class TaskStatusChoices(ChoicesMixin, models.TextChoices):
     def is_active_state(cls, status: str) -> bool:
         """Check if the status is in an active state (pending or in progress)."""
         return status in {cls.PENDING, cls.IN_PROGRESS}
+
+
+class DataImportStrategy(ChoicesMixin, models.TextChoices):
+    """Strategy options for handling data imports when records already exist.
+
+    This class defines different approaches for handling duplicate data during import
+    operations. Each strategy provides a different behavior for handling conflicts
+    with existing records.
+
+    Attributes:
+        FAIL (str): Stops the import process if any existing records are found.
+            Use when data integrity is critical and duplicates are not allowed.
+        REPLACE (str): Overwrites any existing records with new data.
+            Use when the imported data should be treated as the source of truth.
+        APPEND (str): Adds new records while preserving existing ones.
+            Use when maintaining historical data or collecting cumulative data.
+
+    Example:
+        class DataImport(models.Model):
+            strategy = models.CharField(
+                max_length=50,
+                choices=DataImportStrategy.choices,
+                default=DataImportStrategy.FAIL,
+                help_text="Strategy for handling existing records during import"
+            )
+
+        # Usage in import logic
+        if strategy == DataImportStrategy.FAIL:
+            if existing_record:
+                raise ImportError("Record already exists")
+        elif strategy == DataImportStrategy.REPLACE:
+            existing_record.update(new_data)
+        elif strategy == DataImportStrategy.APPEND:
+            create_new_record(new_data)
+    """
+
+    FAIL = "FAIL", _("Fail if exists")
+    REPLACE = "REPLACE", _("Replace existing")
+    APPEND = "APPEND", _("Append to existing")
 
 
 # Person
@@ -384,16 +449,28 @@ class TransactionGatewayChoices(ChoicesMixin, models.TextChoices):
 class TransactionStateChoices(ChoicesMixin, models.TextChoices):
     """Transaction processing state options.
 
+    Represents the various states a transaction can be in during its lifecycle,
+    from initiation to completion. Implements a state machine pattern where
+    transitions between states are strictly controlled.
+
     References:
         https://stripe.com/docs/payments/intents#intent-statuses
 
     Attributes:
-        REQUIRES_PAYMENT_METHOD (str): Payment method needs to be provided
-        REQUIRES_CONFIRMATION (str): Transaction requires confirmation
-        REQUIRES_ACTION (str): Additional action required
-        PROCESSING (str): Transaction is being processed
-        CANCEL (str): Transaction has been cancelled
-        SUCCESS (str): Transaction completed successfully
+        REQUIRES_PAYMENT_METHOD (str): Initial state when payment method is needed
+        REQUIRES_CONFIRMATION (str): Payment method received, awaiting confirmation
+        REQUIRES_ACTION (str): Additional user action needed (e.g., 3DS verification)
+        PROCESSING (str): Transaction is being processed by payment provider
+        CANCEL (str): Terminal state indicating cancelled transaction
+        SUCCESS (str): Terminal state indicating successful completion
+
+    Example:
+        # Check if a state transition is valid
+        if TransactionStateChoices.can_transition_to(
+            "REQUIRES_PAYMENT_METHOD",
+            "REQUIRES_CONFIRMATION"
+        ):
+            # Perform transition
     """
 
     DEFAULT = "", _("---")
@@ -406,7 +483,21 @@ class TransactionStateChoices(ChoicesMixin, models.TextChoices):
 
     @classmethod
     def can_transition_to(cls, current_state: str, new_state: str) -> bool:
-        """Validate if a state transition is allowed."""
+        """Validate if a state transition is allowed.
+
+        Args:
+            current_state (str): The current transaction state
+            new_state (str): The proposed new state
+
+        Returns:
+            bool: True if the transition is allowed, False otherwise
+
+        Example:
+            >>> TransactionStateChoices.can_transition_to("PROCESSING", "SUCCESS")
+            True
+            >>> TransactionStateChoices.can_transition_to("SUCCESS", "PROCESSING")
+            False
+        """
         return new_state in TRANSACTION_STATE_TRANSITIONS.get(current_state, set())
 
 

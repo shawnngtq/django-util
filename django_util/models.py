@@ -5,14 +5,17 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.utils import timezone
 
 from django_util.choices import (
+    DataImportStrategy,
     FlatOrPercentChoices,
     PaymentMethodTypeChoices,
     PersonBloodChoices,
     PersonEyeColorChoices,
     PersonGenderChoices,
     PersonRaceChoices,
+    TaskStatusChoices,
     TimeFrequencyChoices,
     TransactionEventTypeChoices,
     TransactionStateChoices,
@@ -182,6 +185,353 @@ class BasePublicContribute(Base):
                 "is_verified",
             ]
         )
+
+
+class DataImportProgress(models.Model):
+    """Track and manage data import operations progress.
+
+    This model tracks the progress of data import operations, including file handling,
+    row processing, and detailed logging of the import process. It provides methods
+    for updating progress and logging various events during the import.
+
+    Attributes:
+        filepath (FilePathField): Path to the import data file
+        if_exists (str): Strategy for handling existing data conflicts
+        status (str): Current status of the import process
+        total_rows (int): Total number of rows to be processed
+        processed_rows (int): Number of rows successfully processed
+        progress_log (dict): Structured log containing:
+            - steps: List of processing steps with timestamps
+            - errors: List of encountered errors with context
+            - error: Terminal error message if failed
+
+    Example:
+        progress = DataImportProgress.objects.create(
+            filepath='/data/users.csv',
+            if_exists=DataImportStrategy.FAIL,
+            total_rows=1000
+        )
+
+        try:
+            progress.mark_as_started()
+            progress.log_step("validation", "Validating CSV format")
+            # ... import logic ...
+            progress.update_progress(50)  # Update after processing rows
+            progress.mark_as_completed()
+        except Exception as e:
+            progress.mark_as_failed(str(e))
+    """
+
+    filepath = models.FilePathField(
+        recursive=True,
+        help_text="Path to the file containing import data. Must be under the project's data directory.",
+    )
+    if_exists = UpperTextField(
+        blank=True,
+        choices=DataImportStrategy.choices,
+        default=DataImportStrategy.FAIL,
+        help_text="Strategy to handle existing data",
+    )
+    status = UpperTextField(
+        blank=True,
+        choices=TaskStatusChoices.choices,
+        default=TaskStatusChoices.PENDING,
+        help_text="Current status of the import process",
+    )
+    total_rows = models.PositiveIntegerField(
+        default=0,
+        validators=[MinValueValidator(0)],
+        help_text="Total number of rows to be processed",
+    )
+    processed_rows = models.PositiveIntegerField(
+        default=0,
+        validators=[MinValueValidator(0)],
+        help_text="Number of rows processed so far",
+    )
+    progress_log = models.JSONField(
+        blank=True,
+        default=dict,
+        help_text="Detailed log of the import process",
+    )
+
+    class Meta:
+        abstract = True
+
+    def get_progress_percentage(self) -> float:
+        """Calculate the current progress as a percentage.
+
+        Returns:
+            float: Percentage of completion from 0.0 to 100.0
+
+        Example:
+            >>> progress.total_rows = 200
+            >>> progress.processed_rows = 50
+            >>> progress.get_progress_percentage()
+            25.0
+        """
+        if self.total_rows == 0:
+            return 0.0
+        return round((self.processed_rows / self.total_rows) * 100, 2)
+
+    def mark_as_started(self) -> None:
+        """Mark the import as started and save.
+
+        Updates status to IN_PROGRESS and saves the model.
+        Should be called before beginning the import process.
+        """
+        self.status = TaskStatusChoices.IN_PROGRESS
+        self.save(update_fields=["status"])
+
+    def mark_as_completed(self) -> None:
+        """Mark the import as successfully completed.
+
+        Updates status to COMPLETED and saves the model.
+        Should be called after all rows are processed successfully.
+        """
+        self.status = TaskStatusChoices.COMPLETED
+        self.save(update_fields=["status"])
+
+    def mark_as_failed(self, error_message: str) -> None:
+        """Mark the import as failed with an error message.
+
+        Args:
+            error_message (str): Description of what caused the failure
+
+        Note:
+            This will update both the status and add the error message
+            to the progress_log.
+        """
+        self.status = TaskStatusChoices.FAILED
+        self.progress_log["error"] = error_message
+        self.save(update_fields=["status", "progress_log"])
+
+    def log_step(self, step: str, message: str) -> None:
+        """Log a processing step with timestamp.
+
+        Args:
+            step (str): Name or identifier of the processing step
+            message (str): Description of what was done
+
+        Example:
+            >>> progress.log_step("validation", "Checking CSV headers")
+        """
+        if "steps" not in self.progress_log:
+            self.progress_log["steps"] = []
+
+        self.progress_log["steps"].append(
+            {
+                "step": step,
+                "message": message,
+                "timestamp": timezone.now().isoformat(),
+            }
+        )
+        self.save(update_fields=["progress_log"])
+
+    def log_error(self, step: str, error: str, **additional_info) -> None:
+        """Log a non-terminal error with context.
+
+        Args:
+            step (str): Step where error occurred
+            error (str): Error message or description
+            **additional_info: Additional context as keyword arguments
+
+        Example:
+            >>> progress.log_error(
+            ...     "row_processing",
+            ...     "Invalid date format",
+            ...     row_number=45,
+            ...     column="birth_date"
+            ... )
+        """
+        if "errors" not in self.progress_log:
+            self.progress_log["errors"] = []
+
+        error_log = {
+            "step": step,
+            "error": str(error),
+            "timestamp": timezone.now().isoformat(),
+            **additional_info,
+        }
+        self.progress_log["errors"].append(error_log)
+        self.save(update_fields=["progress_log"])
+
+    def update_progress(self, processed_count: int) -> None:
+        """Update the number of processed rows.
+
+        Args:
+            processed_count (int): New total of processed rows
+
+        Example:
+            >>> for i, row in enumerate(data):
+            ...     process_row(row)
+            ...     progress.update_progress(i + 1)
+        """
+        self.processed_rows = processed_count
+        self.save(update_fields=["processed_rows"])
+
+
+class DataExtractProgress(models.Model):
+    """Track and manage API data extraction operations.
+
+    This model tracks the progress of data extraction from external APIs,
+    including request tracking, response logging, and output file management.
+
+    Attributes:
+        api_request (dict): API request configuration containing:
+            - endpoint: API endpoint URL
+            - headers: Request headers
+            - params: Query parameters
+        progress_log (dict): Structured log containing:
+            - requests: List of API requests made
+            - errors: List of request errors
+            - error: Terminal error message if failed
+        filepath (str): Path where extracted data will be stored
+        status (str): Current status of extraction process
+        total_requests (int): Total number of API requests planned
+        completed_requests (int): Number of API requests completed
+
+    Example:
+        progress = DataExtractProgress.objects.create(
+            api_request={'endpoint': 'api.example.com/users'},
+            filepath='/data/api_extract.json',
+            total_requests=100
+        )
+
+        try:
+            progress.mark_as_started()
+            for page in range(10):
+                response = make_api_request(page=page)
+                progress.log_request('users', {'page': page}, response.status_code)
+                progress.update_progress(page + 1)
+            progress.mark_as_completed()
+        except Exception as e:
+            progress.mark_as_failed(str(e))
+    """
+
+    api_request = models.JSONField(
+        blank=True,
+        default=dict,
+        help_text="API request parameters and configuration",
+    )
+    progress_log = models.JSONField(
+        blank=True,
+        default=dict,
+        help_text="Detailed log of the extraction process",
+    )
+    filepath = models.FilePathField(
+        path=[settings.BASE_DIR],
+        recursive=True,
+        help_text="Path where extracted data will be stored. Must be under the project's data directory.",
+    )
+    status = UpperTextField(
+        blank=True,
+        choices=TaskStatusChoices.choices,
+        default=TaskStatusChoices.PENDING,
+        help_text="Current status of the extraction process",
+    )
+    total_requests = models.PositiveIntegerField(
+        default=0,
+        validators=[MinValueValidator(0)],
+        help_text="Total number of API requests to be made",
+    )
+    completed_requests = models.PositiveIntegerField(
+        default=0,
+        validators=[MinValueValidator(0)],
+        help_text="Number of API requests completed",
+    )
+
+    class Meta:
+        abstract = True
+
+    def get_progress_percentage(self) -> float:
+        """Calculate the current progress as a percentage.
+
+        Returns:
+            float: Percentage of completion from 0.0 to 100.0
+
+        Example:
+            >>> progress.total_requests = 50
+            >>> progress.completed_requests = 25
+            >>> progress.get_progress_percentage()
+            50.0
+        """
+        if self.total_requests == 0:
+            return 0.0
+        return round((self.completed_requests / self.total_requests) * 100, 2)
+
+    def mark_as_started(self) -> None:
+        """Mark the extraction as started and save.
+
+        Updates status to IN_PROGRESS and saves the model.
+        Should be called before making the first API request.
+        """
+        self.status = TaskStatusChoices.IN_PROGRESS
+        self.save(update_fields=["status"])
+
+    def mark_as_completed(self) -> None:
+        """Mark the extraction as successfully completed.
+
+        Updates status to COMPLETED and saves the model.
+        Should be called after all API requests are completed.
+        """
+        self.status = TaskStatusChoices.COMPLETED
+        self.save(update_fields=["status"])
+
+    def mark_as_failed(self, error_message: str) -> None:
+        """Mark the extraction as failed with an error message.
+
+        Args:
+            error_message (str): Description of what caused the failure
+
+        Note:
+            This will update both the status and add the error message
+            to the progress_log.
+        """
+        self.status = TaskStatusChoices.FAILED
+        self.progress_log["error"] = error_message
+        self.save(update_fields=["status", "progress_log"])
+
+    def log_request(self, endpoint: str, params: dict, response_status: int) -> None:
+        """Log an API request with its response status.
+
+        Args:
+            endpoint (str): API endpoint called
+            params (dict): Request parameters used
+            response_status (int): HTTP status code received
+
+        Example:
+            >>> progress.log_request(
+            ...     'users',
+            ...     {'page': 1, 'limit': 100},
+            ...     200
+            ... )
+        """
+        if "requests" not in self.progress_log:
+            self.progress_log["requests"] = []
+
+        self.progress_log["requests"].append(
+            {
+                "endpoint": endpoint,
+                "params": params,
+                "status": response_status,
+                "timestamp": timezone.now().isoformat(),
+            }
+        )
+        self.save(update_fields=["progress_log"])
+
+    def update_progress(self, completed_count: int) -> None:
+        """Update the number of completed API requests.
+
+        Args:
+            completed_count (int): New total of completed requests
+
+        Example:
+            >>> for i, batch in enumerate(request_batches):
+            ...     make_api_request(batch)
+            ...     progress.update_progress(i + 1)
+        """
+        self.completed_requests = completed_count
+        self.save(update_fields=["completed_requests"])
 
 
 class EmailHttpRequest(models.Model):
