@@ -305,26 +305,31 @@ class DataImportProgress(models.Model):
         self.progress_log["error"] = error_message
         self.save(update_fields=["status", "progress_log"])
 
-    def log_step(self, step: str, message: str) -> None:
+    def log_step(self, step: str, message: str, **additional_info) -> None:
         """Log a processing step with timestamp.
 
         Args:
             step (str): Name or identifier of the processing step
             message (str): Description of what was done
+            **additional_info: Additional context as keyword arguments
 
         Example:
-            >>> progress.log_step("validation", "Checking CSV headers")
+            >>> progress.log_step(
+            ...     "initialization",
+            ...     "Setting up API client",
+            ...     config={'timeout': 30, 'retries': 3}
+            ... )
         """
         if "steps" not in self.progress_log:
             self.progress_log["steps"] = []
 
-        self.progress_log["steps"].append(
-            {
-                "step": step,
-                "message": message,
-                "timestamp": timezone.now().isoformat(),
-            }
-        )
+        step_log = {
+            "step": step,
+            "message": message,
+            "timestamp": timezone.now().isoformat(),
+            **additional_info,
+        }
+        self.progress_log["steps"].append(step_log)
         self.save(update_fields=["progress_log"])
 
     def log_error(self, step: str, error: str, **additional_info) -> None:
@@ -519,26 +524,31 @@ class DataExtractProgress(models.Model):
         )
         self.save(update_fields=["progress_log"])
 
-    def log_step(self, step: str, message: str) -> None:
+    def log_step(self, step: str, message: str, **additional_info) -> None:
         """Log a processing step with timestamp.
 
         Args:
             step (str): Name or identifier of the processing step
             message (str): Description of what was done
+            **additional_info: Additional context as keyword arguments
 
         Example:
-            >>> progress.log_step("initialization", "Setting up API client")
+            >>> progress.log_step(
+            ...     "initialization",
+            ...     "Setting up API client",
+            ...     config={'timeout': 30, 'retries': 3}
+            ... )
         """
         if "steps" not in self.progress_log:
             self.progress_log["steps"] = []
 
-        self.progress_log["steps"].append(
-            {
-                "step": step,
-                "message": message,
-                "timestamp": timezone.now().isoformat(),
-            }
-        )
+        step_log = {
+            "step": step,
+            "message": message,
+            "timestamp": timezone.now().isoformat(),
+            **additional_info,
+        }
+        self.progress_log["steps"].append(step_log)
         self.save(update_fields=["progress_log"])
 
     def log_error(self, step: str, error: str, **additional_info) -> None:
