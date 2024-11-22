@@ -519,6 +519,56 @@ class DataExtractProgress(models.Model):
         )
         self.save(update_fields=["progress_log"])
 
+    def log_step(self, step: str, message: str) -> None:
+        """Log a processing step with timestamp.
+
+        Args:
+            step (str): Name or identifier of the processing step
+            message (str): Description of what was done
+
+        Example:
+            >>> progress.log_step("initialization", "Setting up API client")
+        """
+        if "steps" not in self.progress_log:
+            self.progress_log["steps"] = []
+
+        self.progress_log["steps"].append(
+            {
+                "step": step,
+                "message": message,
+                "timestamp": timezone.now().isoformat(),
+            }
+        )
+        self.save(update_fields=["progress_log"])
+
+    def log_error(self, step: str, error: str, **additional_info) -> None:
+        """Log a non-terminal error with context.
+
+        Args:
+            step (str): Step where error occurred
+            error (str): Error message or description
+            **additional_info: Additional context as keyword arguments
+
+        Example:
+            >>> progress.log_error(
+            ...     "api_request",
+            ...     "Rate limit exceeded",
+            ...     endpoint="/users",
+            ...     retry_after=60
+            ... )
+        """
+        if "errors" not in self.progress_log:
+            self.progress_log["errors"] = []
+
+        error_log = {
+            "step": step,
+            "error": str(error),
+            "timestamp": timezone.now().isoformat(),
+            **additional_info,
+        }
+        self.progress_log["errors"].append(error_log)
+        self.save(update_fields=["progress_log"])
+
     def update_progress(self, completed_count: int) -> None:
         """Update the number of completed API requests.
 
