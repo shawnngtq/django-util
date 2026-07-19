@@ -1,3 +1,9 @@
-from . import _version
+try:
+    from ._version import __version__
+except ImportError:
+    try:
+        from importlib.metadata import version
 
-__version__ = _version.get_versions()["version"]
+        __version__ = version("django-util")
+    except Exception:
+        __version__ = "0.0.0"

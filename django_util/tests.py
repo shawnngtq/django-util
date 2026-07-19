@@ -1,7 +1,16 @@
+import importlib.util
+import unittest
+
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 
 from django_util.models import Profile
+from django_util.utility import get_django_countries_dict
+from django_util.validators import (
+    django_validate_email,
+    django_validate_phone,
+    django_validate_url,
+)
 
 
 # Create your tests here.
@@ -58,3 +67,43 @@ class ProfileModelTests(TestCase):
         self.assertTrue(isinstance(p1, Profile))
         self.assertEqual(u1.profile, p1)
         self.assertEqual(p1.balance, 0)
+
+
+class ValidatorTests(SimpleTestCase):
+    """Test suite for the moved data-manipulation validator helpers."""
+
+    def test_validate_email(self):
+        self.assertEqual(django_validate_email("valid@email.com"), "valid@email.com")
+        self.assertEqual(
+            django_validate_email("valid@email.com", whitelist_domains=["email.com"]),
+            "valid@email.com",
+        )
+        self.assertIsNone(
+            django_validate_email("valid@email.com", whitelist_domains=["other.com"])
+        )
+        self.assertIsNone(django_validate_email("not-an-email"))
+
+    def test_validate_url(self):
+        self.assertEqual(
+            django_validate_url("https://example.com"),
+            "https://example.com",
+        )
+        self.assertIsNone(django_validate_url("not a url"))
+
+    @unittest.skipUnless(
+        importlib.util.find_spec("phonenumber_field"),
+        "requires django-phonenumber-field",
+    )
+    def test_validate_phone(self):
+        self.assertEqual(django_validate_phone("+1234567890"), "+1234567890")
+        self.assertIsNone(django_validate_phone("invalid"))
+
+    @unittest.skipUnless(
+        importlib.util.find_spec("django_countries"),
+        "requires django-countries",
+    )
+    def test_get_django_countries_dict(self):
+        code_name, name_code = get_django_countries_dict()
+        self.assertIn("US", code_name)
+        self.assertEqual(code_name["US"], code_name["US"].upper())
+        self.assertEqual(name_code[code_name["US"]], "US")

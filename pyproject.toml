@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=77", "setuptools-scm>=8", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-util"
+dynamic = ["version"]
+description = "A Django application that provides generic utility."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Shawn Ng", email = "shawn.coding.acc@gmail.com" },
+]
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+dependencies = [
+    "django>=4.2",
+]
+
+[project.optional-dependencies]
+countries = ["django-countries"]
+phonenumber = ["django-phonenumber-field"]
+docs = ["mkdocs", "mkdocs-material", "mkdocstrings-python"]
+
+[project.urls]
+Homepage = "https://github.com/shawnngtq/django-util"
+Documentation = "https://shawnngtq.github.io/django-util/"
+Repository = "https://github.com/shawnngtq/django-util"
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",        # pycodestyle
+    "F",        # Pyflakes
+    "UP",       # pyupgrade
+    "B",        # flake8-bugbear
+    "SIM",      # flake8-simplify
+    "I",        # isort
+]
+ignore = [
+    "E402",     # module-import-not-at-top-of-file
+    "E501",     # line-too-long
+    "F401",     # unused-import
+    "F403",     # undefined-local-with-import-star
+    "F405",     # undefined-local-with-import-star-usage
+    "UP018",    # native-literals
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["django_util", "django_util.*"]
+
+[tool.setuptools_scm]
+version_file = "django_util/_version.py"
+fallback_version = "0.0.0"
